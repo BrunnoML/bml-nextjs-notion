@@ -24,7 +24,7 @@ export default function RootLayout({
     // O componente Header tem links para as páginas Início, Sobre, Projetos e Blog
     // O componente Header tem links que mudam de cor ao passar o mouse
     // O componente Header tem um botão que muda o tema de escuro para claro
-    <html lang="pt">
+    <html lang="pt" className="dark">
     {/* 
         Modo claro por padrão (bg-white text-gray-900),
         e se a classe .dark estiver presente no <html>,

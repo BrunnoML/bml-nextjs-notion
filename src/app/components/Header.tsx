@@ -6,7 +6,7 @@ import Image from "next/image";
 
 export default function Header() {
   // Exemplo de estado para alternar ícone de sol e lua
-  const [isDark, setIsDark] = useState(true);
+  const [isDark, setIsDark] = useState(true); // Começa em dark
 
   useEffect(() => {
     // Inicializa o tema de acordo com a classe já aplicada no <html>
@@ -18,17 +18,16 @@ export default function Header() {
   }, []);
 
   const toggleTheme = () => {
-    setIsDark((prev) => {
-      const newState = !prev;
-      // Adiciona/Remove a classe "dark" no <html> para mudar todo o site
-      if (newState) {
-        document.documentElement.classList.add("dark");
-      } else {
-        document.documentElement.classList.remove("dark");
-      }
-      return newState;
-    });
+    setIsDark(!isDark);
+    if (!isDark) {
+      // Se estava claro, agora vamos para escuro
+      document.documentElement.classList.add("dark");
+    } else {
+      // Se estava escuro, agora vamos para claro
+      document.documentElement.classList.remove("dark");
+    }
   };
+  
 
   // Define as classes do header de forma dinâmica
   // Se estiver no modo dark, fundo escuro e texto branco;
