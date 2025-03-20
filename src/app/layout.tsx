@@ -32,7 +32,12 @@ export default function RootLayout({
       */}
     <body className="bg-white text-gray-900 dark:bg-gray-900 dark:text-white min-h-screen">
       <Header />
-      <main>{children}</main>
+      {/* Conteúdo principal */}
+      <main className="flex-grow">{children}</main>
+        {/* Footer (Rodapé) */}
+        <footer className="p-4 text-center text-sm bg-gray-100 text-gray-400 dark:bg-gray-800 dark:text-gray-400">
+          © 2025 BrunnoML
+        </footer>
     </body>
   </html>
   );

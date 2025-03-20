@@ -34,7 +34,7 @@ export default function Header() {
   // Se estiver no modo dark, fundo escuro e texto branco;
   // Se estiver no modo claro, fundo claro e texto escuro.
   const headerClasses = isDark
-    ? "sticky top-0 z-50 flex items-center justify-between p-4 bg-gray-900 text-white"
+    ? "sticky top-0 z-50 flex items-center justify-between p-4 bg-gray-800 text-white"
     : "sticky top-0 z-50 flex items-center justify-between p-4 bg-gray-100 text-gray-800";
 
   return (

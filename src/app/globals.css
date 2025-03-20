@@ -2,6 +2,29 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
+/* Estilos globais para o corpo do site */
+body {
+  @apply font-sans;
+}
+
+/* Cabeçalhos centralizados com espaçamento */
+h1 {
+  @apply text-4xl font-bold text-purple-500 text-center mb-4;
+}
+
+h2 {
+  @apply text-3xl font-bold text-center mb-3;
+}
+
+h3 {
+  @apply text-2xl font-semibold text-purple-500 text-center mb-2;
+}
+
+/* Parágrafos justificados com margem inferior */
+p {
+  @apply text-lg text-justify mb-4;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
