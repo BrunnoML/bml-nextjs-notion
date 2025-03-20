@@ -24,12 +24,16 @@ export default function RootLayout({
     // O componente Header tem links para as páginas Início, Sobre, Projetos e Blog
     // O componente Header tem links que mudam de cor ao passar o mouse
     // O componente Header tem um botão que muda o tema de escuro para claro
-      <html lang="pt">
-        {/* A classe "bg-gray-900 text-white" garante fundo escuro e texto branco */}
-        <body className="bg-gray-900 text-white min-h-screen">
-          <Header />
-          <main>{children}</main>
-        </body>
-      </html>
+    <html lang="pt">
+    {/* 
+        Modo claro por padrão (bg-white text-gray-900),
+        e se a classe .dark estiver presente no <html>,
+        muda para bg-gray-900 text-white (darkMode: "class").
+      */}
+    <body className="bg-white text-gray-900 dark:bg-gray-900 dark:text-white min-h-screen">
+      <Header />
+      <main>{children}</main>
+    </body>
+  </html>
   );
 }
