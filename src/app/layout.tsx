@@ -6,6 +6,11 @@ import Header from "./components/Header";
 export const metadata: Metadata = {
   title: "BrunnoML",
   description: "Site pessoal do desenvolvedor Brunno Monteiro Lira",
+  icons: {
+    icon: '/favicon.png', // Caminho para o favicon
+    apple: '/favicon.png', // Para compatibilidade com Safari (apple-touch-icon)
+  },
+  
 };
 
 export default function RootLayout({
