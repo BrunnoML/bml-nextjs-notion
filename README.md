@@ -19,7 +19,7 @@
 
 
 <p align="center">
-  <img alt="projeto bml-nextjs-notion" src="/assets/preview.png" width="100%">
+  <img alt="projeto bml-nextjs-notion" src="public/assets/preview.png" width="100%">
 </p>
 
 
