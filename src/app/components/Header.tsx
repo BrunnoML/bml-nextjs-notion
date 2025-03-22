@@ -1,28 +1,31 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
+import { useTheme } from 'next-themes';
 
 export default function Header() {
-  const [isDark, setIsDark] = useState(true);
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const toggleTheme = () => {
-    setIsDark(!isDark);
-    if (!isDark) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  };
+  // Evitar problemas de hidratação
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
 
+  // Evitar renderização até que o componente esteja montado
+  if (!mounted) {
+    return null;
+  }
+
   return (
-    <header className="sticky top-0 z-50 bg-gray-800 text-white flex items-center justify-between p-4">
+    <header className="sticky top-0 z-50 bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200 flex items-center justify-between p-4 shadow-md">
       {/* Logo + Título */}
       <div className="flex items-center">
         <h1 className="text-2xl font-bold text-purple-500 mr-4">Brunno ML</h1>
@@ -34,9 +37,8 @@ export default function Header() {
         className="md:hidden focus:outline-none"
         aria-label="Toggle menu"
       >
-        {/* Ícone hamburguer simples */}
         <svg
-          className="w-6 h-6 text-white"
+          className="w-6 h-6 text-gray-800 dark:text-gray-200"
           fill="none"
           stroke="currentColor"
           strokeWidth="2"
@@ -45,18 +47,16 @@ export default function Header() {
           strokeLinejoin="round"
         >
           {menuOpen ? (
-            /* Ícone de X */
             <path d="M6 18L18 6M6 6l12 12" />
           ) : (
-            /* Ícone de 3 linhas (hamburguer) */
             <path d="M3 12h18M3 6h18M3 18h18" />
           )}
         </svg>
       </button>
 
-      {/* Menu de Navegação (em telas médias, aparece fixo; em telas pequenas, condicional) */}
+      {/* Menu de Navegação */}
       <nav
-        className={`absolute md:static top-full left-0 w-full md:w-auto bg-gray-800 md:bg-transparent transition-all duration-300 ${
+        className={`absolute md:static top-full left-0 w-full md:w-auto bg-gray-200 dark:bg-gray-800 md:bg-transparent transition-all duration-300 ${
           menuOpen ? "block" : "hidden md:block"
         }`}
       >
@@ -96,28 +96,28 @@ export default function Header() {
         </ul>
       </nav>
 
-      {/* Botão de tema (Clarear/Escurecer) - Mantendo sua lógica anterior */}
+      {/* Botão de tema */}
       <button
-        onClick={toggleTheme}
-        className="flex items-center p-2 border rounded hover:bg-gray-700 transition-colors"
-      aria-label={isDark ? "Mudar para tema claro" : "Mudar para tema escuro"}
-      title={isDark ? "Mudar para tema claro" : "Mudar para tema escuro"}
-    >
-      {isDark ? (
-        <Image
-          src="/images/icon-sun.png"
-          alt="Ícone de sol"
-          width={24}
-          height={24}
-        />
-      ) : (
-        <Image
-          src="/images/icon-moon.png"
-          alt="Ícone de lua"
-          width={24}
-          height={24}
-        />
-      )}
+        onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+        className="flex items-center p-2 border rounded border-gray-400 dark:border-gray-600 hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors"
+        aria-label={theme === 'dark' ? "Mudar para tema claro" : "Mudar para tema escuro"}
+        title={theme === 'dark' ? "Mudar para tema claro" : "Mudar para tema escuro"}
+      >
+        {theme === 'dark' ? (
+          <Image
+            src="/images/icon-sun.png"
+            alt="Ícone de sol"
+            width={24}
+            height={24}
+          />
+        ) : (
+          <Image
+            src="/images/icon-moon.png"
+            alt="Ícone de lua"
+            width={24}
+            height={24}
+          />
+        )}
       </button>
     </header>
   );

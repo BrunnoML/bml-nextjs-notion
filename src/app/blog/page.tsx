@@ -1,10 +1,21 @@
-export default function Blog() {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-screen p-8">
-        <h2 className="text-4xl font-bold mb-4">Blog</h2>
-        <p className="text-xl text-center max-w-2xl">
-          Em breve, este blog será integrado ao Notion para exibir postagens dinâmicas.
-        </p>
-      </div>
-    );
-  }
+import { getPosts } from '@/lib/notion';
+import Link from 'next/link';
+
+export default async function Blog() {
+  const posts = await getPosts();
+
+  return (
+    <div className="p-8">
+      <h1>Blog</h1>
+      <ul>
+        {posts.map((post) => (
+          <li key={post.id}>
+            <Link href={`/blog/${post.slug}`}>
+              {post.title} - {post.date}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
