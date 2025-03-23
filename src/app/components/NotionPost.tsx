@@ -1,12 +1,65 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus, coy } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { useTheme } from 'next-themes';
 
+// Definimos tipos compatíveis com os dados do Notion
+export interface RichText {
+  plain_text: string;
+  href?: string;
+  annotations: {
+    bold: boolean;
+    italic: boolean;
+    underline: boolean;
+    color: string;
+    background_color?: string;
+  };
+}
+
+// Definimos a interface Block com as propriedades esperadas
+export interface Block {
+  type: string;
+  id: string;
+  paragraph?: {
+    rich_text: RichText[];
+    color?: string;
+  };
+  heading_1?: {
+    rich_text: RichText[];
+  };
+  heading_2?: {
+    rich_text: RichText[];
+  };
+  heading_3?: {
+    rich_text: RichText[];
+  };
+  bulleted_list_item?: {
+    rich_text: RichText[];
+  };
+  numbered_list_item?: {
+    rich_text: RichText[];
+  };
+  image?: {
+    file?: { url: string };
+    external?: { url: string };
+    caption?: RichText[];
+  };
+  embed?: {
+    url: string;
+    caption?: RichText[];
+  };
+  divider?: Record<string, never>;
+  code?: {
+    rich_text: RichText[];
+    language: string;
+  };
+}
+
 interface NotionPostProps {
-  blocks: any[];
+  blocks: Block[];
 }
 
 export default function NotionPost({ blocks }: NotionPostProps) {
@@ -43,7 +96,8 @@ export default function NotionPost({ blocks }: NotionPostProps) {
     }
   };
 
-  const getBackgroundColorClass = (backgroundColor: string) => {
+  const getBackgroundColorClass = (backgroundColor: string | undefined) => {
+    if (!backgroundColor) return "";
     switch (backgroundColor) {
       case "red_background":
         return "bg-red-100 text-black";
@@ -68,8 +122,8 @@ export default function NotionPost({ blocks }: NotionPostProps) {
     }
   };
 
-  const renderRichText = (richText: any[]) => {
-    return richText.map((text: any, index: number) => {
+  const renderRichText = (richText: RichText[]) => {
+    return richText.map((text: RichText, index: number) => {
       const { plain_text, href, annotations } = text;
       const backgroundClass = getBackgroundColorClass(annotations.background_color);
       let element = (
@@ -109,71 +163,93 @@ export default function NotionPost({ blocks }: NotionPostProps) {
     });
   };
 
-  const renderBlock = (block: any) => {
+  const renderBlock = (block: Block) => {
     const { type, id } = block;
 
     switch (type) {
       case "paragraph":
         const blockBackgroundClass = getBackgroundColorClass(block.paragraph?.color);
+        const hasRichText = block.paragraph && block.paragraph.rich_text && block.paragraph.rich_text.length > 0;
+        if (hasRichText) {
+          const paragraph = block.paragraph as { rich_text: RichText[]; color?: string };
+          return (
+            <p key={id} className={`my-2 ${blockBackgroundClass} px-1 rounded`}>
+              {renderRichText(paragraph.rich_text)}
+            </p>
+          );
+        }
         return (
           <p key={id} className={`my-2 ${blockBackgroundClass} px-1 rounded`}>
-            {block.paragraph?.rich_text?.length > 0 ? (
-              renderRichText(block.paragraph.rich_text)
-            ) : (
-              <br />
-            )}
+            <br />
           </p>
         );
       case "heading_1":
-        return (
-          <h1 key={id} className="text-3xl font-bold my-4">
-            {block.heading_1?.rich_text?.length > 0
-              ? renderRichText(block.heading_1.rich_text)
-              : null}
-          </h1>
-        );
+        const hasHeading1Text = block.heading_1 && block.heading_1.rich_text && block.heading_1.rich_text.length > 0;
+        if (hasHeading1Text) {
+          const heading1 = block.heading_1 as { rich_text: RichText[] };
+          return (
+            <h1 key={id} className="text-3xl font-bold my-4">
+              {renderRichText(heading1.rich_text)}
+            </h1>
+          );
+        }
+        return <h1 key={id} className="text-3xl font-bold my-4" />;
       case "heading_2":
-        return (
-          <h2 key={id} className="text-2xl font-semibold my-3">
-            {block.heading_2?.rich_text?.length > 0
-              ? renderRichText(block.heading_2.rich_text)
-              : null}
-          </h2>
-        );
+        const hasHeading2Text = block.heading_2 && block.heading_2.rich_text && block.heading_2.rich_text.length > 0;
+        if (hasHeading2Text) {
+          const heading2 = block.heading_2 as { rich_text: RichText[] };
+          return (
+            <h2 key={id} className="text-2xl font-semibold my-3">
+              {renderRichText(heading2.rich_text)}
+            </h2>
+          );
+        }
+        return <h2 key={id} className="text-2xl font-semibold my-3" />;
       case "heading_3":
-        return (
-          <h3 key={id} className="text-xl font-medium my-2">
-            {block.heading_3?.rich_text?.length > 0
-              ? renderRichText(block.heading_3.rich_text)
-              : null}
-          </h3>
-        );
+        const hasHeading3Text = block.heading_3 && block.heading_3.rich_text && block.heading_3.rich_text.length > 0;
+        if (hasHeading3Text) {
+          const heading3 = block.heading_3 as { rich_text: RichText[] };
+          return (
+            <h3 key={id} className="text-xl font-medium my-2">
+              {renderRichText(heading3.rich_text)}
+            </h3>
+          );
+        }
+        return <h3 key={id} className="text-xl font-medium my-2" />;
       case "bulleted_list_item":
-        return (
-          <li key={id} className="ml-4 list-disc">
-            {block.bulleted_list_item?.rich_text?.length > 0
-              ? renderRichText(block.bulleted_list_item.rich_text)
-              : null}
-          </li>
-        );
+        const hasBulletedText = block.bulleted_list_item && block.bulleted_list_item.rich_text && block.bulleted_list_item.rich_text.length > 0;
+        if (hasBulletedText) {
+          const bulletedListItem = block.bulleted_list_item as { rich_text: RichText[] };
+          return (
+            <li key={id} className="ml-4 list-disc">
+              {renderRichText(bulletedListItem.rich_text)}
+            </li>
+          );
+        }
+        return <li key={id} className="ml-4 list-disc" />;
       case "numbered_list_item":
-        return (
-          <li key={id} className="ml-4 list-decimal">
-            {block.numbered_list_item?.rich_text?.length > 0
-              ? renderRichText(block.numbered_list_item.rich_text)
-              : null}
-          </li>
-        );
+        const hasNumberedText = block.numbered_list_item && block.numbered_list_item.rich_text && block.numbered_list_item.rich_text.length > 0;
+        if (hasNumberedText) {
+          const numberedListItem = block.numbered_list_item as { rich_text: RichText[] };
+          return (
+            <li key={id} className="ml-4 list-decimal">
+              {renderRichText(numberedListItem.rich_text)}
+            </li>
+          );
+        }
+        return <li key={id} className="ml-4 list-decimal" />;
       case "image":
         const imageUrl = block.image?.file?.url || block.image?.external?.url;
         if (!imageUrl) {
           return <div key={id}>[Imagem não encontrada]</div>;
         }
         return (
-          <img
+          <Image
             key={id}
             src={imageUrl}
             alt={block.image?.caption?.[0]?.plain_text || "Imagem do Notion"}
+            width={800}
+            height={600}
             className="my-4 max-w-full rounded-lg"
           />
         );
@@ -182,10 +258,12 @@ export default function NotionPost({ blocks }: NotionPostProps) {
         if (embedUrl && /\.(png|jpg|jpeg|gif|webp)$/i.test(embedUrl)) {
           const proxyUrl = `/api/proxy-image?url=${encodeURIComponent(embedUrl)}`;
           return (
-            <img
+            <Image
               key={id}
               src={proxyUrl}
               alt={block.embed?.caption?.[0]?.plain_text || "Imagem incorporada"}
+              width={800}
+              height={600}
               className="my-4 max-w-full rounded-lg"
             />
           );
@@ -199,18 +277,18 @@ export default function NotionPost({ blocks }: NotionPostProps) {
         const currentTheme = resolvedTheme || theme || 'light';
         return (
           <div
-            key={`${id}-container`} // Usamos uma key única para o contêiner
+            key={`${id}-container`}
             className="my-4 rounded-lg overflow-hidden border border-gray-300 dark:border-gray-700"
           >
             <SyntaxHighlighter
-              key={`${id}-${currentTheme}`} // Forçamos a recriação do componente ao mudar o tema
+              key={`${id}-${currentTheme}`}
               language={language}
               style={currentTheme === 'dark' ? vscDarkPlus : coy}
               customStyle={{
                 padding: '1rem',
                 fontSize: '14px',
                 background: currentTheme === 'dark' ? '#1e1e1e' : '#f5f5f5',
-                margin: 0, // Garantimos que não há margem
+                margin: 0,
               }}
               showLineNumbers
               wrapLines

@@ -1,84 +1,132 @@
 import { Client } from '@notionhq/client';
+import {
+  PageObjectResponse,
+  PartialPageObjectResponse,
+  PartialDatabaseObjectResponse,
+  DatabaseObjectResponse,
+  BlockObjectResponse,
+  PartialBlockObjectResponse,
+} from '@notionhq/client/build/src/api-endpoints';
 
-// Inicializa o cliente oficial do Notion
-const notion = new Client({ auth: process.env.NOTION_API_KEY });
+// Inicializamos o cliente do Notion
+const notion = new Client({
+  auth: process.env.NOTION_TOKEN,
+});
 
-export async function getPosts() {
-  const databaseId = process.env.NOTION_DATABASE_ID || '';
-  console.log('Database ID:', databaseId);
-
-  try {
-    const response = await notion.databases.query({
-      database_id: databaseId,
-      filter: {
-        property: 'published',
-        checkbox: { equals: true },
-      },
-    });
-
-    const posts = response.results.map((post) => ({
-      id: post.id,
-      title: post.properties.title?.title[0]?.plain_text || '',
-      slug: post.properties.slug?.rich_text[0]?.plain_text || '',
-      date: post.properties.date?.date?.start || '',
-      tags: post.properties.tag?.multi_select?.map((tag) => tag.name) || [],
-    }));
-
-    console.log('Posts encontrados:', posts);
-    return posts;
-  } catch (error) {
-    console.error('Erro ao buscar posts:', error);
-    return [];
-  }
+// Tipos personalizados para as propriedades do Notion
+interface NotionTitleProperty {
+  type: 'title';
+  title: Array<{ plain_text: string }>;
 }
 
-export async function getPostBySlug(slug: string) {
-  const databaseId = process.env.NOTION_DATABASE_ID || '';
-  console.log('Buscando post com slug:', slug);
+interface NotionRichTextProperty {
+  type: 'rich_text';
+  rich_text: Array<{ plain_text: string }>;
+}
 
-  try {
-    const response = await notion.databases.query({
-      database_id: databaseId,
-      filter: {
-        property: 'slug',
-        rich_text: { equals: slug },
+interface NotionDateProperty {
+  type: 'date';
+  date: { start: string } | null;
+}
+
+interface NotionMultiSelectProperty {
+  type: 'multi_select';
+  multi_select: Array<{ name: string }>;
+}
+
+// Tipo para as propriedades do Notion
+interface NotionProperties {
+  title: NotionTitleProperty;
+  slug: NotionRichTextProperty;
+  date: NotionDateProperty;
+  tag: NotionMultiSelectProperty;
+  Published: { type: 'checkbox'; checkbox: boolean };
+}
+
+// Função para verificar se um objeto é um PageObjectResponse
+const isPageObjectResponse = (
+  obj: PageObjectResponse | PartialPageObjectResponse | PartialDatabaseObjectResponse | DatabaseObjectResponse
+): obj is PageObjectResponse => {
+  return 'properties' in obj;
+};
+
+// Função para buscar todos os posts do Notion
+export async function getPosts() {
+  const databaseId = process.env.NOTION_DATABASE_ID;
+  if (!databaseId) {
+    throw new Error('NOTION_DATABASE_ID is not defined in the environment variables.');
+  }
+
+  const response = await notion.databases.query({
+    database_id: databaseId,
+    filter: {
+      property: 'published',
+      checkbox: {
+        equals: true,
       },
+    },
+    sorts: [
+      {
+        property: 'date',
+        direction: 'descending',
+      },
+    ],
+  });
+
+  // Filtramos apenas os objetos que são PageObjectResponse
+  const posts = response.results
+    .filter(isPageObjectResponse)
+    .map((post) => {
+      const properties = post.properties as unknown as NotionProperties;
+      return {
+        id: post.id,
+        title: properties.title?.title?.[0]?.plain_text || '',
+        slug: properties.slug?.rich_text?.[0]?.plain_text || '',
+        date: properties.date?.date?.start || '',
+        tags: properties.tag?.multi_select?.map((tag) => tag.name) || [],
+      };
     });
 
-    const post = response.results[0];
-    if (!post) {
-      console.log('Nenhum post encontrado com o slug:', slug);
-      return null;
-    }
+  return posts;
+}
 
-    console.log('Post encontrado:', {
-      id: post.id,
-      title: post.properties.title?.title[0]?.plain_text || '',
-      slug: post.properties.slug?.rich_text[0]?.plain_text || '',
-    });
+// Função para buscar um post específico pelo slug
+export async function getPostBySlug(slug: string) {
+  const databaseId = process.env.NOTION_DATABASE_ID;
+  if (!databaseId) {
+    throw new Error('NOTION_DATABASE_ID is not defined in the environment variables.');
+  }
 
-    const pageId = post.id;
-    console.log('Buscando blocos da página com ID:', pageId);
+  // Buscamos o post com o slug correspondente
+  const response = await notion.databases.query({
+    database_id: databaseId,
+    filter: {
+      property: 'slug',
+      rich_text: {
+        equals: slug,
+      },
+    },
+  });
 
-    // Busca os blocos da página usando o cliente oficial
-    const blocksResponse = await notion.blocks.children.list({
-      block_id: pageId,
-      page_size: 100, // Ajuste conforme necessário
-    });
-
-    const blocks = blocksResponse.results;
-    console.log('Blocos encontrados:', blocks);
-
-    return {
-      id: post.id,
-      title: post.properties.title?.title[0]?.plain_text || '',
-      slug: post.properties.slug?.rich_text[0]?.plain_text || '',
-      date: post.properties.date?.date?.start || '',
-      tags: post.properties.tag?.multi_select?.map((tag) => tag.name) || [],
-      blocks, // Retorna os blocos em vez do recordMap
-    };
-  } catch (error) {
-    console.error('Erro ao buscar post por slug:', error);
+  // Filtramos apenas os objetos que são PageObjectResponse
+  const post = response.results.find(isPageObjectResponse);
+  if (!post) {
     return null;
   }
+
+  // Buscamos os blocos filhos do post
+  const blocksResponse = await notion.blocks.children.list({
+    block_id: post.id,
+  });
+
+  const properties = post.properties as unknown as NotionProperties;
+
+  return {
+    id: post.id,
+    title: properties.title?.title?.[0]?.plain_text || '',
+    slug: properties.slug?.rich_text?.[0]?.plain_text || '',
+    date: properties.date?.date?.start || '',
+    tags: properties.tag?.multi_select?.map((tag) => tag.name) || [],
+    blocks: blocksResponse.results as (BlockObjectResponse | PartialBlockObjectResponse)[],
+  };
 }
