@@ -20,6 +20,17 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt" suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                document.documentElement.classList.add('dark');
+              })();
+            `,
+          }}
+        />
+      </head>
       <body className="bg-white text-gray-900 dark:bg-gray-900 dark:text-white min-h-screen flex flex-col">
         <ThemeWrapper>
           <Header />
