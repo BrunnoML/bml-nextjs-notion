@@ -33,3 +33,20 @@ p {
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Garantir que o react-syntax-highlighter não seja afetado pelo Tailwind */
+.syntax-highlighter-container * {
+  all: revert;
+}
+
+/* Garantir que a estilização de código inline não seja sobrescrita */
+.notion-code-inline {
+  font-family: monospace !important;
+  color: #ef4444 !important; /* text-red-500 */
+  background-color: #e5e7eb !important; /* bg-gray-200 */
+}
+
+.dark .notion-code-inline {
+  background-color: #374151 !important; /* bg-gray-700 */
+}
+

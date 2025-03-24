@@ -15,7 +15,7 @@ export interface RichText {
     italic: boolean;
     underline: boolean;
     color: string;
-    background_color?: string;
+    code: boolean; // Suporte a estilização de código inline
   };
 }
 
@@ -25,7 +25,7 @@ export interface Block {
   id: string;
   paragraph?: {
     rich_text: RichText[];
-    color?: string;
+    color?: string; // Cor de fundo ao nível do bloco (ex.: yellow_background)
   };
   heading_1?: {
     rich_text: RichText[];
@@ -71,6 +71,7 @@ export default function NotionPost({ blocks }: NotionPostProps) {
     setMounted(true);
   }, []);
 
+  // Mapeia a cor do texto para uma classe Tailwind
   const getColorClass = (color: string) => {
     switch (color) {
       case "red":
@@ -96,41 +97,50 @@ export default function NotionPost({ blocks }: NotionPostProps) {
     }
   };
 
-  const getBackgroundColorClass = (backgroundColor: string | undefined) => {
-    if (!backgroundColor) return "";
+  // Mapeia a cor de fundo do bloco para uma classe Tailwind
+  const getBackgroundColorClass = (backgroundColor?: string) => {
     switch (backgroundColor) {
-      case "red_background":
-        return "bg-red-100 text-black";
-      case "blue_background":
-        return "bg-blue-100 text-black";
-      case "green_background":
-        return "bg-green-100 text-black";
-      case "yellow_background":
-        return "bg-yellow-100 text-black";
-      case "purple_background":
-        return "bg-purple-100 text-black";
-      case "orange_background":
-        return "bg-orange-100 text-black";
-      case "pink_background":
-        return "bg-pink-100 text-black";
-      case "brown_background":
-        return "bg-amber-100 text-black";
       case "gray_background":
-        return "bg-gray-100 text-black";
+        return "bg-gray-200 dark:bg-gray-700";
+      case "brown_background":
+        return "bg-amber-200 dark:bg-amber-700";
+      case "orange_background":
+        return "bg-orange-200 dark:bg-orange-700";
+      case "yellow_background":
+        return "bg-yellow-500 dark:bg-yellow-600";
+      case "green_background":
+        return "bg-green-200 dark:bg-green-700";
+      case "blue_background":
+        return "bg-blue-200 dark:bg-blue-700";
+      case "purple_background":
+        return "bg-purple-200 dark:bg-purple-700";
+      case "pink_background":
+        return "bg-pink-200 dark:bg-pink-700";
+      case "red_background":
+        return "bg-red-200 dark:bg-red-700";
       default:
         return "";
     }
   };
 
+  // Renderiza texto rico (rich text) com estilizações como negrito, itálico, links, etc.
   const renderRichText = (richText: RichText[]) => {
+    console.log("Rendering rich text:", richText); // Log para depuração
     return richText.map((text: RichText, index: number) => {
       const { plain_text, href, annotations } = text;
-      const backgroundClass = getBackgroundColorClass(annotations.background_color);
+      console.log("Rich text annotations:", annotations); // Log para depuração
+
+      // Nota: A API do Notion não suporta background_color para estilizações inline.
+      // Para aplicar cores de fundo, use block.paragraph.color no Notion (nível do bloco).
+      let className = `${getColorClass(annotations.color)} px-1 rounded`;
+
+      // Estilização para texto com anotação "code"
+      if (annotations.code) {
+        className += " notion-code-inline px-1 rounded";
+      }
+
       let element = (
-        <span
-          key={index}
-          className={`${getColorClass(annotations.color)} ${backgroundClass} px-1 rounded inline-block`}
-        >
+        <span key={index} className={className}>
           {plain_text}
         </span>
       );
@@ -150,7 +160,9 @@ export default function NotionPost({ blocks }: NotionPostProps) {
           <a
             key={index}
             href={href}
-            className={`text-purple-400 hover:underline ${getColorClass(annotations.color)} ${backgroundClass} px-1 rounded inline-block`}
+            className={`text-purple-400 hover:underline ${getColorClass(annotations.color)} px-1 rounded ${
+              annotations.code ? "notion-code-inline" : ""
+            }`}
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -163,6 +175,7 @@ export default function NotionPost({ blocks }: NotionPostProps) {
     });
   };
 
+  // Renderiza cada bloco do Notion com base no tipo
   const renderBlock = (block: Block) => {
     const { type, id } = block;
 
@@ -183,6 +196,7 @@ export default function NotionPost({ blocks }: NotionPostProps) {
             <br />
           </p>
         );
+
       case "heading_1":
         const hasHeading1Text = block.heading_1 && block.heading_1.rich_text && block.heading_1.rich_text.length > 0;
         if (hasHeading1Text) {
@@ -194,6 +208,7 @@ export default function NotionPost({ blocks }: NotionPostProps) {
           );
         }
         return <h1 key={id} className="text-3xl font-bold my-4" />;
+
       case "heading_2":
         const hasHeading2Text = block.heading_2 && block.heading_2.rich_text && block.heading_2.rich_text.length > 0;
         if (hasHeading2Text) {
@@ -205,6 +220,7 @@ export default function NotionPost({ blocks }: NotionPostProps) {
           );
         }
         return <h2 key={id} className="text-2xl font-semibold my-3" />;
+
       case "heading_3":
         const hasHeading3Text = block.heading_3 && block.heading_3.rich_text && block.heading_3.rich_text.length > 0;
         if (hasHeading3Text) {
@@ -216,6 +232,7 @@ export default function NotionPost({ blocks }: NotionPostProps) {
           );
         }
         return <h3 key={id} className="text-xl font-medium my-2" />;
+
       case "bulleted_list_item":
         const hasBulletedText = block.bulleted_list_item && block.bulleted_list_item.rich_text && block.bulleted_list_item.rich_text.length > 0;
         if (hasBulletedText) {
@@ -227,6 +244,7 @@ export default function NotionPost({ blocks }: NotionPostProps) {
           );
         }
         return <li key={id} className="ml-4 list-disc" />;
+
       case "numbered_list_item":
         const hasNumberedText = block.numbered_list_item && block.numbered_list_item.rich_text && block.numbered_list_item.rich_text.length > 0;
         if (hasNumberedText) {
@@ -238,6 +256,7 @@ export default function NotionPost({ blocks }: NotionPostProps) {
           );
         }
         return <li key={id} className="ml-4 list-decimal" />;
+
       case "image":
         const imageUrl = block.image?.file?.url || block.image?.external?.url;
         if (!imageUrl) {
@@ -253,6 +272,7 @@ export default function NotionPost({ blocks }: NotionPostProps) {
             className="my-4 max-w-full rounded-lg"
           />
         );
+
       case "embed":
         const embedUrl = block.embed?.url;
         if (embedUrl && /\.(png|jpg|jpeg|gif|webp)$/i.test(embedUrl)) {
@@ -269,21 +289,63 @@ export default function NotionPost({ blocks }: NotionPostProps) {
           );
         }
         return <div key={id}>[Embed não suportado: {embedUrl}]</div>;
+
       case "divider":
         return <hr key={id} className="my-4 border-t border-gray-600 dark:border-gray-400" />;
+
       case "code":
+        console.log("Code block:", block); // Log para depuração
         const codeContent = block.code?.rich_text?.[0]?.plain_text || '';
         const language = block.code?.language || 'plaintext';
+        if (!codeContent) {
+          console.warn("No code content found in block:", block);
+          return <div key={id} className="text-red-500">[Bloco de código vazio]</div>;
+        }
         const currentTheme = resolvedTheme || theme || 'light';
+
+        // Tema personalizado para o modo claro
+        const customCoyTheme = {
+          ...coy,
+          'code[class*="language-"]': {
+            ...coy['code[class*="language-"]'],
+            background: "transparent",
+          },
+          '.keyword': {
+            color: "red",
+            background: "yellow",
+          },
+          '.string': {
+            color: "red",
+            background: "yellow",
+          },
+        };
+
+        // Tema personalizado para o modo escuro
+        const customDarkTheme = {
+          ...vscDarkPlus,
+          'code[class*="language-"]': {
+            ...vscDarkPlus['code[class*="language-"]'],
+            background: "transparent",
+          },
+          '.keyword': {
+            color: "red",
+            background: "yellow",
+          },
+          '.string': {
+            color: "red",
+            background: "yellow",
+          },
+        };
+
         return (
           <div
             key={`${id}-container`}
-            className="my-4 rounded-lg overflow-hidden border border-gray-300 dark:border-gray-700"
+            className="my-4 rounded-lg overflow-hidden border border-gray-300 dark:border-gray-700 syntax-highlighter-container"
           >
             <SyntaxHighlighter
               key={`${id}-${currentTheme}`}
-              language={language}
-              style={currentTheme === 'dark' ? vscDarkPlus : coy}
+              language={language.toLowerCase()}
+              style={currentTheme === 'dark' ? customDarkTheme : customCoyTheme}
               customStyle={{
                 padding: '1rem',
                 fontSize: '14px',
@@ -297,6 +359,7 @@ export default function NotionPost({ blocks }: NotionPostProps) {
             </SyntaxHighlighter>
           </div>
         );
+
       default:
         return <div key={id}>[Bloco não suportado: {type}]</div>;
     }

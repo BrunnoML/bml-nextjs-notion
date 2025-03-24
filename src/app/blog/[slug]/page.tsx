@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { getPostBySlug } from "@/lib/notion";
+import { getPostBySlug, getPosts } from "@/lib/notion";
 import NotionPost from "@/app/components/NotionPost";
 import { notFound } from "next/navigation";
 import { BlockObjectResponse, PartialBlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
@@ -13,6 +13,17 @@ function transformNotionBlocks(blocks: (PartialBlockObjectResponse | BlockObject
       // Retornamos o bloco no formato esperado pela interface Block
       return block as Block;
     });
+}
+
+// Define o intervalo de revalidação (em segundos)
+export const revalidate = 1; // Revalida a cada 1 segundo
+
+// Gera as rotas estáticas para todos os slugs
+export async function generateStaticParams() {
+  const posts = await getPosts();
+  return posts.map((post) => ({
+    slug: post.slug,
+  }));
 }
 
 export default async function PostPage({ params }: { params: { slug: string } }) {
