@@ -16,7 +16,7 @@ function transformNotionBlocks(blocks: (PartialBlockObjectResponse | BlockObject
 }
 
 // Define o intervalo de revalidação (em segundos)
-export const revalidate = 1; // Revalida a cada 1 segundo
+export const revalidate = 60; // Revalida a cada 60 segundos
 
 // Gera as rotas estáticas para todos os slugs
 export async function generateStaticParams() {

@@ -1,7 +1,7 @@
 import { getPosts } from '@/lib/notion';
 import Link from 'next/link';
 
-export const revalidate = 1; // Revalida a cada 1 segundo
+export const revalidate = 60; // Revalida a cada 60 segundos
 
 export default async function Blog() {
   const posts = await getPosts();
