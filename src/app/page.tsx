@@ -13,7 +13,7 @@ export default function Home() {
       />
 
       {/* Nome e Descrição */}
-      <h1 className="text-4xl font-bold text-purple-500">Brunno ML</h1>
+      <h1 className="text-4xl font-bold text-purple-500">Brunno</h1>
       <p className="text-xl text-center max-w-xl">
         Desenvolvedor apaixonado por tecnologia e pelo impacto positivo que ela
         pode gerar na sociedade.
