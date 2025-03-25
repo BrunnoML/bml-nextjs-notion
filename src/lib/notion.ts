@@ -56,6 +56,26 @@ const isPageObjectResponse = (
   return 'properties' in obj;
 };
 
+// Função para buscar todos os blocos de uma página, lidando com paginação
+async function fetchAllBlocks(blockId: string): Promise<(BlockObjectResponse | PartialBlockObjectResponse)[]> {
+  let allBlocks: (BlockObjectResponse | PartialBlockObjectResponse)[] = [];
+  let hasMore = true;
+  let startCursor: string | undefined = undefined;
+
+  while (hasMore) {
+    const blocksResponse = await notion.blocks.children.list({
+      block_id: blockId,
+      start_cursor: startCursor,
+    });
+
+    allBlocks = [...allBlocks, ...blocksResponse.results];
+    hasMore = blocksResponse.has_more;
+    startCursor = blocksResponse.next_cursor ?? undefined;
+  }
+
+  return allBlocks;
+}
+
 // Função para buscar todos os posts do Notion
 export async function getPosts() {
   const databaseId = process.env.NOTION_DATABASE_ID;
@@ -129,10 +149,8 @@ export async function getPostBySlug(slug: string) {
     return null;
   }
 
-  // Buscamos os blocos filhos do post
-  const blocksResponse = await notion.blocks.children.list({
-    block_id: post.id,
-  });
+  // Buscamos todos os blocos filhos do post, lidando com paginação
+  const blocks = await fetchAllBlocks(post.id);
 
   const properties = post.properties as unknown as NotionProperties;
 
@@ -142,7 +160,7 @@ export async function getPostBySlug(slug: string) {
     slug: properties.slug?.rich_text?.[0]?.plain_text || '',
     date: properties.date?.date?.start || '',
     tags: properties.tag?.multi_select?.map((tag) => tag.name) || [],
-    blocks: blocksResponse.results as (BlockObjectResponse | PartialBlockObjectResponse)[],
+    blocks,
   };
 
   // Log para depuração

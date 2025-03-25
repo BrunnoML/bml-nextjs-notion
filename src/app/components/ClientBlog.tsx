@@ -67,7 +67,7 @@ export default function ClientBlog({ initialPosts }: ClientBlogProps) {
 
   return (
     <div className="p-8">
-      <h1 className="text-3xl font-bold mb-6 text-gray-900 dark:text-gray-100">Blog</h1>
+      <h1>Blog</h1>
 
       {/* Campo de busca */}
       <div className="mb-6">
