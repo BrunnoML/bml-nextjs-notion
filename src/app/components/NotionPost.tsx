@@ -176,62 +176,62 @@ export default function NotionPost({ blocks }: NotionPostProps) {
   };
 
   // Renderiza cada bloco do Notion com base no tipo
-  const renderBlock = (block: Block) => {
-    const { type, id } = block;
+const renderBlock = (block: Block) => {
+  const { type, id } = block;
 
-    switch (type) {
-      case "paragraph":
-        const blockBackgroundClass = getBackgroundColorClass(block.paragraph?.color);
-        const hasRichText = block.paragraph && block.paragraph.rich_text && block.paragraph.rich_text.length > 0;
-        if (hasRichText) {
-          const paragraph = block.paragraph as { rich_text: RichText[]; color?: string };
-          return (
-            <p key={id} className={`my-2 ${blockBackgroundClass} px-1 rounded`}>
-              {renderRichText(paragraph.rich_text)}
-            </p>
-          );
-        }
+  switch (type) {
+    case "paragraph":
+      const blockBackgroundClass = getBackgroundColorClass(block.paragraph?.color);
+      const hasRichText = block.paragraph && block.paragraph.rich_text && block.paragraph.rich_text.length > 0;
+      if (hasRichText) {
+        const paragraph = block.paragraph as { rich_text: RichText[]; color?: string };
         return (
-          <p key={id} className={`my-2 ${blockBackgroundClass} px-1 rounded`}>
-            <br />
+          <p key={id} className={`${blockBackgroundClass} px-1 rounded`}>
+            {renderRichText(paragraph.rich_text)}
           </p>
         );
+      }
+      return (
+        <p key={id} className={`${blockBackgroundClass} px-1 rounded`}>
+          <br />
+        </p>
+      );
 
-      case "heading_1":
-        const hasHeading1Text = block.heading_1 && block.heading_1.rich_text && block.heading_1.rich_text.length > 0;
-        if (hasHeading1Text) {
-          const heading1 = block.heading_1 as { rich_text: RichText[] };
-          return (
-            <h1 key={id} className="text-3xl font-bold my-4">
-              {renderRichText(heading1.rich_text)}
-            </h1>
-          );
-        }
-        return <h1 key={id} className="text-3xl font-bold my-4" />;
+    case "heading_1":
+      const hasHeading1Text = block.heading_1 && block.heading_1.rich_text && block.heading_1.rich_text.length > 0;
+      if (hasHeading1Text) {
+        const heading1 = block.heading_1 as { rich_text: RichText[] };
+        return (
+          <h1 key={id}>
+            {renderRichText(heading1.rich_text)}
+          </h1>
+        );
+      }
+      return <h1 key={id}  />;
 
-      case "heading_2":
-        const hasHeading2Text = block.heading_2 && block.heading_2.rich_text && block.heading_2.rich_text.length > 0;
-        if (hasHeading2Text) {
-          const heading2 = block.heading_2 as { rich_text: RichText[] };
-          return (
-            <h2 key={id} className="text-2xl font-semibold my-3">
-              {renderRichText(heading2.rich_text)}
-            </h2>
-          );
-        }
-        return <h2 key={id} className="text-2xl font-semibold my-3" />;
+    case "heading_2":
+      const hasHeading2Text = block.heading_2 && block.heading_2.rich_text && block.heading_2.rich_text.length > 0;
+      if (hasHeading2Text) {
+        const heading2 = block.heading_2 as { rich_text: RichText[] };
+        return (
+          <h2 key={id}> 
+            {renderRichText(heading2.rich_text)}
+          </h2>
+        );
+      }
+      return <h2 key={id} />;
 
-      case "heading_3":
-        const hasHeading3Text = block.heading_3 && block.heading_3.rich_text && block.heading_3.rich_text.length > 0;
-        if (hasHeading3Text) {
-          const heading3 = block.heading_3 as { rich_text: RichText[] };
-          return (
-            <h3 key={id} className="text-xl font-medium my-2">
-              {renderRichText(heading3.rich_text)}
-            </h3>
-          );
-        }
-        return <h3 key={id} className="text-xl font-medium my-2" />;
+    case "heading_3":
+      const hasHeading3Text = block.heading_3 && block.heading_3.rich_text && block.heading_3.rich_text.length > 0;
+      if (hasHeading3Text) {
+        const heading3 = block.heading_3 as { rich_text: RichText[] };
+        return (
+          <h3 key={id}>
+            {renderRichText(heading3.rich_text)}
+          </h3>
+        );
+      }
+      return <h3 key={id} />;
 
       case "bulleted_list_item":
         const hasBulletedText = block.bulleted_list_item && block.bulleted_list_item.rich_text && block.bulleted_list_item.rich_text.length > 0;

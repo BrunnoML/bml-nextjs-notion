@@ -8,6 +8,12 @@ import {
   PartialBlockObjectResponse,
 } from '@notionhq/client/build/src/api-endpoints';
 
+
+
+// Log para depuração: verificar as variáveis de ambiente
+console.log("NOTION_TOKEN:", process.env.NOTION_TOKEN);
+console.log("NOTION_DATABASE_ID:", process.env.NOTION_DATABASE_ID);
+
 // Inicializamos o cliente do Notion
 const notion = new Client({
   auth: process.env.NOTION_TOKEN,
@@ -73,18 +79,24 @@ export async function getPosts() {
     ],
   });
 
+  // Log para depuração: dados brutos retornados pelo Notion
+  console.log("Notion database query response:", response);
+
   // Filtramos apenas os objetos que são PageObjectResponse
   const posts = response.results
     .filter(isPageObjectResponse)
     .map((post) => {
       const properties = post.properties as unknown as NotionProperties;
-      return {
+      const mappedPost = {
         id: post.id,
         title: properties.title?.title?.[0]?.plain_text || '',
         slug: properties.slug?.rich_text?.[0]?.plain_text || '',
         date: properties.date?.date?.start || '',
         tags: properties.tag?.multi_select?.map((tag) => tag.name) || [],
       };
+      // Log para depuração: dados mapeados de cada post
+      console.log("Mapped post:", mappedPost);
+      return mappedPost;
     });
 
   return posts;
@@ -108,6 +120,9 @@ export async function getPostBySlug(slug: string) {
     },
   });
 
+  // Log para depuração
+  console.log("Notion database query response for slug:", slug, response);
+
   // Filtramos apenas os objetos que são PageObjectResponse
   const post = response.results.find(isPageObjectResponse);
   if (!post) {
@@ -121,7 +136,7 @@ export async function getPostBySlug(slug: string) {
 
   const properties = post.properties as unknown as NotionProperties;
 
-  return {
+  const mappedPost = {
     id: post.id,
     title: properties.title?.title?.[0]?.plain_text || '',
     slug: properties.slug?.rich_text?.[0]?.plain_text || '',
@@ -129,4 +144,9 @@ export async function getPostBySlug(slug: string) {
     tags: properties.tag?.multi_select?.map((tag) => tag.name) || [],
     blocks: blocksResponse.results as (BlockObjectResponse | PartialBlockObjectResponse)[],
   };
+
+  // Log para depuração
+  console.log("Mapped post by slug:", mappedPost);
+
+  return mappedPost;
 }

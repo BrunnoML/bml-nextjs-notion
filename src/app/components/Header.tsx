@@ -4,11 +4,18 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { useTheme } from 'next-themes';
+import { usePathname } from 'next/navigation';
 
 export default function Header() {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname(); // Obter o caminho atual
+
+  // Fechar menu quando a rota muda
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [pathname]);
 
   // Evitar problemas de hidratação
   useEffect(() => {
@@ -28,7 +35,9 @@ export default function Header() {
     <header className="sticky top-0 z-50 bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200 flex items-center justify-between p-4 shadow-md">
       {/* Logo + Título */}
       <div className="flex items-center">
-        <h1 className="text-2xl font-bold text-purple-500 mr-4">Brunno ML</h1>
+        <Link href="/" className="text-2xl font-bold text-purple-500 mr-4 hover:text-purple-600 transition-colors">
+        Brunno ML
+        </Link>
       </div>
 
       {/* Botão Hamburguer (só aparece em telas pequenas) */}
