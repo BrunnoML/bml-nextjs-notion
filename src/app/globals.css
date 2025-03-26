@@ -4,25 +4,41 @@
 
 /* Estilos globais para o corpo do site */
 body {
-  @apply font-sans;
+  font-family: var(--font-sans);
 }
 
 /* Cabeçalhos com espaçamento aumentado */
 h1 {
-  @apply text-4xl font-bold text-purple-400 text-center mb-10 mt-10; /* Aumentei margin top e bottom */
+  font-size: 2.25rem; /* text-4xl */
+  font-weight: 700; /* font-bold */
+  color: #a855f7; /* text-purple-400 */
+  text-align: center; /* text-center */
+  margin-bottom: 2.5rem; /* mb-10 */
+  margin-top: 2.5rem; /* mt-10 */
 }
 
 h2 {
-  @apply text-3xl font-bold text-left mb-8 mt-8; /* Aumentei margin top e bottom */
+  font-size: 1.875rem; /* text-3xl */
+  font-weight: 700; /* font-bold */
+  text-align: left; /* text-left */
+  margin-bottom: 2rem; /* mb-8 */
+  margin-top: 2rem; /* mt-8 */
 }
 
 h3 {
-  @apply text-2xl font-semibold text-left mb-6 mt-6; /* Aumentei margin top e bottom */
+  font-size: 1.5rem; /* text-2xl */
+  font-weight: 600; /* font-semibold */
+  text-align: left; /* text-left */
+  margin-bottom: 1.5rem; /* mb-6 */
+  margin-top: 1.5rem; /* mt-6 */
 }
 
 /* Parágrafos com espaçamento aumentado */
 p {
-  @apply text-lg text-justify mb-8 mt-8; /* Aumentei margin top e bottom */
+  font-size: 1.125rem; /* text-lg */
+  text-align: justify; /* text-justify */
+  margin-bottom: 2rem; /* mb-8 */
+  margin-top: 2rem; /* mt-8 */
 }
 
 :root {
@@ -48,4 +64,52 @@ body {
 
 .dark .notion-code-inline {
   background-color: #374151 !important; /* bg-gray-700 */
+}
+
+.notion-image-container {
+  margin: 1.5rem 0;
+  max-width: 100%;
+}
+
+.notion-image-caption {
+  font-size: 0.875rem;
+  color: #6b7280;
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+/* Container de imagem responsivo */
+.notion-image-responsive {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  margin: 1.5rem auto;
+}
+
+/* Manter proporções das imagens */
+.notion-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  overflow: hidden;
+  border-radius: 0.5rem;
+  background-color: #f3f4f6;
+}
+
+.dark .notion-image-wrapper {
+  background-color: #1f2937;
+}
+
+/* Transição suave para imagens */
+.notion-image {
+  transition: opacity 0.3s ease;
+}
+
+.notion-image-loading {
+  opacity: 0;
+}
+
+.notion-image-loaded {
+  opacity: 1;
 }
