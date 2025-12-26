@@ -187,4 +187,3 @@ CLOUDINARY_API_SECRET=seu_secret
 
 ---
 
-*Post escrito em 26/12/2024 como parte da documentação do projeto.*
