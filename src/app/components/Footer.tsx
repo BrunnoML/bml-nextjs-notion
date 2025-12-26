@@ -16,7 +16,7 @@ export default function Footer() {
               Python | Dados | IA
             </p>
             <p className="mt-4 text-text-muted text-sm">
-              Analista de Dados na UNESTAC - Policia Civil de Pernambuco
+              Desenvolvedor e Analista de Dados
             </p>
           </div>
 

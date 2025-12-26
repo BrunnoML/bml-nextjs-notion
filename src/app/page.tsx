@@ -77,7 +77,7 @@ export default function Home() {
 
             {/* Titulo */}
             <p className="text-xl md:text-2xl text-text-secondary mb-6">
-              Analista de Dados | UNESTAC - Policia Civil de Pernambuco
+              Desenvolvedor e Analista de Dados | Seguranca Publica
             </p>
 
             {/* Tech Badges */}
@@ -89,9 +89,9 @@ export default function Home() {
 
             {/* Descricao */}
             <p className="max-w-2xl text-lg text-text-muted mb-10">
-              Desenvolvedor apaixonado por tecnologia e pelo impacto positivo
-              que ela pode gerar na sociedade. Especializado em analise criminal
-              e automacao de processos com Python e Inteligencia Artificial.
+              Desenvolvendo solucoes analiticas, dashboards e automacoes com
+              Python e IA aplicada. Tecnologia, dados e inteligencia artificial,
+              quando bem aplicados, transformam processos e potencializam decisoes.
             </p>
 
             {/* Social Links */}
@@ -156,19 +156,21 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Stats Section */}
+      {/* Areas de Atuacao */}
       <section className="py-16 bg-dark-900/50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="card card-hover text-center">
-              <div className="text-4xl font-bold text-purple-400 mb-2">3+</div>
-              <div className="text-text-secondary">Anos em TI</div>
-            </div>
             <div className="card card-hover text-center">
               <div className="text-4xl font-bold text-tech-python mb-2">
                 Python
               </div>
               <div className="text-text-secondary">Linguagem Principal</div>
+            </div>
+            <div className="card card-hover text-center">
+              <div className="text-4xl font-bold text-tech-data mb-2">
+                Dashboards
+              </div>
+              <div className="text-text-secondary">Streamlit & Visualizacoes</div>
             </div>
             <div className="card card-hover text-center">
               <div className="text-4xl font-bold text-tech-ai mb-2">IA/ML</div>
@@ -188,12 +190,12 @@ export default function Home() {
             {[
               "Analise de Dados",
               "Python",
+              "Streamlit",
               "Visualizacao de Dados",
               "Inteligencia Artificial",
               "Machine Learning",
               "Automacao de Processos",
               "SQL",
-              "Power BI",
             ].map((skill) => (
               <div
                 key={skill}

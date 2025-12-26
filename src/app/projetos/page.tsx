@@ -2,9 +2,17 @@ import ProjectCard from "../components/ProjectCard";
 
 const projects = [
   {
+    title: "VeriDados",
+    description:
+      "Aplicacao web para verificar, auditar e comparar conjuntos de dados de diversas fontes. Facilita a identificacao de inconsistencias, analise exploratoria e comparacao entre diferentes versoes de dados. Util para validacao pos-ETL.",
+    image: "/images/projeto-veridados.jpg",
+    tags: ["Python", "Streamlit", "Pandas", "Auditoria"],
+    githubUrl: "https://github.com/BrunnoML/VeriDados",
+  },
+  {
     title: "ApT - Audio para Texto",
     description:
-      "Aplicacao que usa a biblioteca Whisper para transcrever arquivos de audio para texto. Desenvolvida para demandas de trabalho na Policia Civil, facilitando a localizacao de arquivos relevantes por pesquisa textual. Tambem idealizada como projeto de extensao na Faculdade Estacio.",
+      "Aplicacao que usa a biblioteca Whisper para transcrever arquivos de audio para texto. Facilita a localizacao de arquivos relevantes por pesquisa textual. Idealizada como projeto de extensao na Faculdade Estacio.",
     image: "/images/projeto1.jpg",
     tags: ["Python", "Whisper", "IA", "Transcricao"],
     githubUrl: "https://github.com/BrunnoML/ApT",
@@ -12,18 +20,10 @@ const projects = [
   {
     title: "DistilBERT Classifier",
     description:
-      "Pipeline para classificar textos (ex: historicos de ocorrencias policiais) usando DistilBERT para gerar embeddings, seguido de um classificador supervisionado. Inclui interface grafica com Gradio para importacao, treinamento e inferencia.",
+      "Pipeline para classificar textos usando DistilBERT para gerar embeddings, seguido de um classificador supervisionado. Inclui interface grafica com Gradio para importacao, treinamento e inferencia.",
     image: "/images/projeto2.jpg",
     tags: ["Python", "DistilBERT", "NLP", "Machine Learning"],
     githubUrl: "https://github.com/BrunnoML/distilbert-classifier",
-  },
-  {
-    title: "Minha Linha do Tempo",
-    description:
-      "Local de registro da evolucao das atividades realizadas durante o desenvolvimento das habilidades em tecnologia, mantido online como portfolio de aprendizado.",
-    image: "/images/projeto3.jpg",
-    tags: ["Web", "Portfolio", "Documentacao"],
-    githubUrl: "https://github.com/BrunnoML/timeline",
   },
 ];
 
