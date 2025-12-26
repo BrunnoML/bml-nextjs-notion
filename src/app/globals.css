@@ -2,114 +2,217 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-/* Estilos globais para o corpo do site */
-body {
-  font-family: var(--font-sans);
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* ========================================
+   BASE STYLES
+   ======================================== */
+@layer base {
+  :root {
+    --font-sans: 'Inter', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-dark-950 text-text-primary font-sans antialiased;
+    background-image:
+      radial-gradient(ellipse at top, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at bottom right, rgba(139, 92, 246, 0.05) 0%, transparent 50%);
+    background-attachment: fixed;
+  }
+
+  /* Selection */
+  ::selection {
+    @apply bg-accent-primary/30 text-text-primary;
+  }
 }
 
-/* Cabeçalhos com espaçamento aumentado */
-h1 {
-  font-size: 2.25rem; /* text-4xl */
-  font-weight: 700; /* font-bold */
-  color: #a855f7; /* text-purple-400 */
-  text-align: center; /* text-center */
-  margin-bottom: 2.5rem; /* mb-10 */
-  margin-top: 2.5rem; /* mt-10 */
+/* ========================================
+   TYPOGRAPHY
+   ======================================== */
+@layer components {
+  h1 {
+    @apply text-4xl md:text-5xl font-bold text-text-primary mb-6 mt-8;
+  }
+
+  h2 {
+    @apply text-2xl md:text-3xl font-bold text-text-primary mb-4 mt-8;
+  }
+
+  h3 {
+    @apply text-xl md:text-2xl font-semibold text-text-primary mb-3 mt-6;
+  }
+
+  p {
+    @apply text-lg text-text-secondary leading-relaxed mb-4;
+  }
+
+  a {
+    @apply text-accent-primary hover:text-accent-secondary transition-colors duration-200;
+  }
 }
 
-h2 {
-  font-size: 1.875rem; /* text-3xl */
-  font-weight: 700; /* font-bold */
-  text-align: left; /* text-left */
-  margin-bottom: 2rem; /* mb-8 */
-  margin-top: 2rem; /* mt-8 */
+/* ========================================
+   CARDS & SURFACES
+   ======================================== */
+@layer components {
+  .card {
+    @apply bg-dark-800 border border-dark-600 rounded-xl p-6 shadow-card;
+    @apply hover:border-accent-primary/30 transition-all duration-300;
+  }
+
+  .card-hover {
+    @apply hover:shadow-glow-blue hover:-translate-y-1;
+  }
+
+  .surface {
+    @apply bg-dark-900 border border-dark-700 rounded-lg;
+  }
 }
 
-h3 {
-  font-size: 1.5rem; /* text-2xl */
-  font-weight: 600; /* font-semibold */
-  text-align: left; /* text-left */
-  margin-bottom: 1.5rem; /* mb-6 */
-  margin-top: 1.5rem; /* mt-6 */
+/* ========================================
+   BUTTONS
+   ======================================== */
+@layer components {
+  .btn {
+    @apply px-6 py-3 rounded-lg font-medium transition-all duration-200;
+    @apply focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-dark-900;
+  }
+
+  .btn-primary {
+    @apply btn bg-accent-primary text-white hover:bg-accent-primary/90;
+    @apply focus:ring-accent-primary;
+  }
+
+  .btn-secondary {
+    @apply btn bg-dark-700 text-text-primary border border-dark-600;
+    @apply hover:bg-dark-600 hover:border-accent-primary/50;
+    @apply focus:ring-dark-500;
+  }
+
+  .btn-ghost {
+    @apply btn bg-transparent text-text-secondary;
+    @apply hover:bg-dark-800 hover:text-text-primary;
+  }
 }
 
-/* Parágrafos com espaçamento aumentado */
-p {
-  font-size: 1.125rem; /* text-lg */
-  text-align: justify; /* text-justify */
-  margin-bottom: 2rem; /* mb-8 */
-  margin-top: 2rem; /* mt-8 */
+/* ========================================
+   TECH BADGES
+   ======================================== */
+@layer components {
+  .tech-badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium;
+    @apply bg-dark-700 border border-dark-600 text-text-secondary;
+  }
+
+  .tech-badge-python {
+    @apply tech-badge border-tech-python/50 text-tech-python bg-tech-python/10;
+  }
+
+  .tech-badge-data {
+    @apply tech-badge border-tech-data/50 text-tech-data bg-tech-data/10;
+  }
+
+  .tech-badge-ai {
+    @apply tech-badge border-tech-ai/50 text-tech-ai bg-tech-ai/10;
+  }
 }
 
-:root {
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ========================================
+   CODE STYLING
+   ======================================== */
+@layer components {
+  .notion-code-inline {
+    @apply font-mono text-sm px-1.5 py-0.5 rounded;
+    @apply bg-dark-700 text-accent-secondary border border-dark-600;
+  }
 }
 
-body {
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-/* Garantir que o react-syntax-highlighter não seja afetado pelo Tailwind */
+/* Garantir que o react-syntax-highlighter nao seja afetado */
 .syntax-highlighter-container * {
   all: revert;
 }
 
-/* Garantir que a estilização de código inline não seja sobrescrita */
-.notion-code-inline {
-  font-family: monospace !important;
-  color: #ef4444 !important; /* text-red-500 */
-  background-color: #e5e7eb !important; /* bg-gray-200 */
+/* ========================================
+   NOTION IMAGE STYLES
+   ======================================== */
+@layer components {
+  .notion-image-container {
+    @apply my-6 max-w-full;
+  }
+
+  .notion-image-responsive {
+    @apply relative w-full max-w-3xl mx-auto my-6;
+  }
+
+  .notion-image-wrapper {
+    @apply relative w-full h-0 overflow-hidden rounded-lg;
+    @apply bg-dark-800 border border-dark-700;
+    padding-bottom: 56.25%;
+  }
+
+  .notion-image-caption {
+    @apply text-sm text-text-muted text-center mt-2;
+  }
+
+  .notion-image {
+    @apply transition-opacity duration-300;
+  }
+
+  .notion-image-loading {
+    @apply opacity-0;
+  }
+
+  .notion-image-loaded {
+    @apply opacity-100;
+  }
 }
 
-.dark .notion-code-inline {
-  background-color: #374151 !important; /* bg-gray-700 */
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+@layer utilities {
+  .animate-in {
+    animation: fadeIn 0.5s ease-in-out forwards;
+  }
+
+  .animate-slide-in {
+    animation: slideUp 0.5s ease-out forwards;
+  }
 }
 
-.notion-image-container {
-  margin: 1.5rem 0;
-  max-width: 100%;
+/* ========================================
+   SCROLLBAR
+   ======================================== */
+@layer utilities {
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-dark-900;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-dark-600 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-dark-500;
+  }
 }
 
-.notion-image-caption {
-  font-size: 0.875rem;
-  color: #6b7280;
-  text-align: center;
-  margin-top: 0.5rem;
-}
-
-/* Container de imagem responsivo */
-.notion-image-responsive {
-  position: relative;
-  width: 100%;
-  max-width: 800px;
-  margin: 1.5rem auto;
-}
-
-/* Manter proporções das imagens */
-.notion-image-wrapper {
-  position: relative;
-  width: 100%;
-  height: 0;
-  padding-bottom: 56.25%; /* 16:9 aspect ratio */
-  overflow: hidden;
-  border-radius: 0.5rem;
-  background-color: #f3f4f6;
-}
-
-.dark .notion-image-wrapper {
-  background-color: #1f2937;
-}
-
-/* Transição suave para imagens */
-.notion-image {
-  transition: opacity 0.3s ease;
-}
-
-.notion-image-loading {
-  opacity: 0;
-}
-
-.notion-image-loaded {
-  opacity: 1;
+/* ========================================
+   GRADIENT TEXT
+   ======================================== */
+@layer utilities {
+  .gradient-text {
+    @apply bg-gradient-to-r from-accent-primary via-accent-secondary to-accent-tertiary bg-clip-text text-transparent;
+  }
 }

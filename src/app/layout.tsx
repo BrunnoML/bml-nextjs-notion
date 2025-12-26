@@ -2,14 +2,40 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Header from "./components/Header";
 import ThemeWrapper from "./components/ThemeWrapper";
-import Footer from "./components/Footer"; // Importamos o Footer
+import Footer from "./components/Footer";
 
 export const metadata: Metadata = {
-  title: "BrunnoML",
-  description: "Site pessoal do desenvolvedor Brunno Monteiro Lira",
+  title: "BrunnoML | Python | Dados | IA",
+  description:
+    "Analista de Dados especializado em Python, Dados e Inteligencia Artificial. Servidor publico na UNESTAC - Policia Civil de Pernambuco.",
+  keywords: [
+    "Python",
+    "Data Analysis",
+    "AI",
+    "Machine Learning",
+    "Analise de Dados",
+    "Inteligencia Artificial",
+  ],
+  authors: [{ name: "Brunno Monteiro Lira" }],
   icons: {
-    icon: '/favicon.png',
-    apple: '/favicon.png',
+    icon: "/favicon.png",
+    apple: "/favicon.png",
+  },
+  openGraph: {
+    title: "BrunnoML | Python | Dados | IA",
+    description:
+      "Analista de Dados especializado em Python, Dados e Inteligencia Artificial.",
+    url: "https://www.brunnoml.com.br",
+    siteName: "BrunnoML",
+    locale: "pt_BR",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "BrunnoML | Python | Dados | IA",
+    description:
+      "Analista de Dados especializado em Python, Dados e Inteligencia Artificial.",
+    creator: "@BrunnoML",
   },
 };
 
@@ -19,22 +45,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="pt" suppressHydrationWarning>
+    <html lang="pt-BR" className="dark" suppressHydrationWarning>
       <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                document.documentElement.classList.add('dark');
-              })();
-            `,
-          }}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
         />
       </head>
-      <body className="bg-white text-gray-900 dark:bg-gray-900 dark:text-white min-h-screen flex flex-col">
+      <body className="min-h-screen flex flex-col">
         <ThemeWrapper>
           <Header />
-          {/* Conteúdo principal */}
           <main className="flex-grow">{children}</main>
           <Footer />
         </ThemeWrapper>
