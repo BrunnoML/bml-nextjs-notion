@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 export default function Sobre() {
   return (
     <div className="min-h-screen py-12">
@@ -8,45 +6,45 @@ export default function Sobre() {
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold mb-4 mt-0">Sobre Mim</h1>
           <p className="text-xl text-text-secondary">
-            Desenvolvedor e Analista de Dados | Seguranca Publica
+            Desenvolvedor e Analista de Dados
           </p>
         </div>
 
         {/* Main Content */}
         <div className="space-y-8">
-          {/* Introducao */}
+          {/* Introdução */}
           <section className="card">
             <p className="text-lg text-text-secondary leading-relaxed mb-4">
-              Desenvolvo solucoes tecnologicas para apoio a tomada de decisao
-              estrategica na area de seguranca publica. Sou responsavel pela
-              criacao de dashboards analiticos em Python e Streamlit, integrados
-              a bancos de dados PostgreSQL, gerando visualizacoes e metricas que
-              subsidiam a gestao institucional.
+              Desenvolvo soluções tecnológicas para apoio à tomada de decisão
+              estratégica na área de segurança pública. Sou responsável pela
+              criação de dashboards analíticos em Python e Streamlit, integrados
+              a bancos de dados PostgreSQL, gerando visualizações e métricas que
+              subsidiam a gestão institucional.
             </p>
             <p className="text-lg text-text-secondary leading-relaxed mb-4">
-              Tambem atuo no deploy de aplicacoes com Docker e na proposicao de
-              projetos de Inteligencia Artificial aplicada.
+              Também atuo no deploy de aplicações com Docker e na proposição de
+              projetos de Inteligência Artificial aplicada.
             </p>
             <p className="text-lg text-text-secondary leading-relaxed">
-              Minha trajetoria combina advocacia (OAB/PE) com tecnologia — uma
-              transicao que me permite analisar dados sob a otica de quem
+              Minha trajetória combina advocacia (OAB/PE) com tecnologia — uma
+              transição que me permite analisar dados sob a ótica de quem
               entende processos, compliance e impacto institucional.
             </p>
           </section>
 
-          {/* Formacao */}
+          {/* Formação */}
           <section className="card">
             <h2 className="text-2xl font-bold mb-6 mt-0 flex items-center gap-2">
-              <span className="text-purple-400">Formacao</span>
+              <span className="text-purple-400">Formação</span>
             </h2>
             <div className="space-y-4">
               <div className="flex items-start gap-4">
                 <div className="w-2 h-2 mt-2 rounded-full bg-purple-400" />
                 <div>
                   <h3 className="font-semibold text-text-primary mt-0 mb-1">
-                    Sistemas de Informacao
+                    Sistemas de Informação
                   </h3>
-                  <p className="text-text-muted">Estacio (2023 - 2027)</p>
+                  <p className="text-text-muted">Estácio (2023 - 2027)</p>
                 </div>
               </div>
               <div className="flex items-start gap-4">
@@ -62,7 +60,7 @@ export default function Sobre() {
                 <div className="w-2 h-2 mt-2 rounded-full bg-purple-400" />
                 <div>
                   <h3 className="font-semibold text-text-primary mt-0 mb-1">
-                    Formacoes Complementares
+                    Formações Complementares
                   </h3>
                   <p className="text-text-muted">
                     IA, Dados, Python (Alura, Rocketseat, curso.dev)
@@ -72,19 +70,19 @@ export default function Sobre() {
             </div>
           </section>
 
-          {/* Areas de Atuacao */}
+          {/* Áreas de Atuação */}
           <section className="card">
             <h2 className="text-2xl font-bold mb-6 mt-0 flex items-center gap-2">
-              <span className="text-tech-data">Areas de Interesse</span>
+              <span className="text-tech-data">Áreas de Interesse</span>
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {[
-                "Analise e visualizacao de dados",
-                "Automacao de processos",
-                "Inteligencia Artificial aplicada",
-                "Dashboards e sistemas de apoio a decisao",
+                "Análise e visualização de dados",
+                "Automação de processos",
+                "Inteligência Artificial aplicada",
+                "Dashboards e sistemas de apoio à decisão",
                 "Desenvolvimento com Python",
-                "Deploy de aplicacoes (Docker)",
+                "Deploy de aplicações (Docker)",
               ].map((area) => (
                 <div
                   key={area}
@@ -130,15 +128,15 @@ export default function Sobre() {
           {/* Quote */}
           <section className="card bg-gradient-to-r from-dark-800 to-dark-900 border-purple-500/30">
             <blockquote className="text-xl text-text-secondary italic text-center">
-              &ldquo;Tecnologia, dados e inteligencia artificial, quando bem
-              aplicados, transformam processos e potencializam decisoes.&rdquo;
+              &ldquo;Tecnologia, dados e inteligência artificial, quando bem
+              aplicados, transformam processos e potencializam decisões.&rdquo;
             </blockquote>
           </section>
 
           {/* CTA */}
           <section className="text-center">
             <p className="text-text-muted mb-6">
-              Confira meus projetos e contribuicoes no GitHub
+              Confira meus projetos e contribuições no GitHub
             </p>
             <div className="flex justify-center gap-4">
               <a

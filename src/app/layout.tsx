@@ -7,14 +7,14 @@ import Footer from "./components/Footer";
 export const metadata: Metadata = {
   title: "BrunnoML | Python | Dados | IA",
   description:
-    "Analista de Dados especializado em Python, Dados e Inteligencia Artificial. Servidor publico na UNESTAC - Policia Civil de Pernambuco.",
+    "Analista de Dados especializado em Python, Dados e Inteligência Artificial. Servidor público na UNESTAC - Polícia Civil de Pernambuco.",
   keywords: [
     "Python",
     "Data Analysis",
     "AI",
     "Machine Learning",
-    "Analise de Dados",
-    "Inteligencia Artificial",
+    "Análise de Dados",
+    "Inteligência Artificial",
   ],
   authors: [{ name: "Brunno Monteiro Lira" }],
   icons: {
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "BrunnoML | Python | Dados | IA",
     description:
-      "Analista de Dados especializado em Python, Dados e Inteligencia Artificial.",
+      "Analista de Dados especializado em Python, Dados e Inteligência Artificial.",
     url: "https://www.brunnoml.com.br",
     siteName: "BrunnoML",
     locale: "pt_BR",
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "BrunnoML | Python | Dados | IA",
     description:
-      "Analista de Dados especializado em Python, Dados e Inteligencia Artificial.",
+      "Analista de Dados especializado em Python, Dados e Inteligência Artificial.",
     creator: "@BrunnoML",
   },
 };

@@ -77,7 +77,7 @@ export default function Home() {
 
             {/* Titulo */}
             <p className="text-xl md:text-2xl text-text-secondary mb-6">
-              Desenvolvedor e Analista de Dados | Seguranca Publica
+              Desenvolvedor e Analista de Dados
             </p>
 
             {/* Tech Badges */}
@@ -87,12 +87,40 @@ export default function Home() {
               <TechBadge label="IA" color="ai" />
             </div>
 
-            {/* Descricao */}
-            <p className="max-w-2xl text-lg text-text-muted mb-10">
-              Desenvolvendo solucoes analiticas, dashboards e automacoes com
-              Python e IA aplicada. Tecnologia, dados e inteligencia artificial,
-              quando bem aplicados, transformam processos e potencializam decisoes.
+            {/* Descrição */}
+            <p className="max-w-2xl text-lg text-text-muted mb-6">
+              Desenvolvendo soluções analíticas, dashboards e automações com
+              Python e IA.
             </p>
+
+            {/* Code Block */}
+            <div className="w-full max-w-2xl mb-10">
+              <div className="bg-dark-800 rounded-lg border border-dark-600 overflow-hidden">
+                <div className="flex items-center gap-2 px-4 py-2 bg-dark-900 border-b border-dark-600">
+                  <div className="w-3 h-3 rounded-full bg-red-500/80" />
+                  <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
+                  <div className="w-3 h-3 rounded-full bg-green-500/80" />
+                  <span className="ml-2 text-xs text-text-muted">transform.py</span>
+                </div>
+                <pre className="p-4 text-xs sm:text-sm md:text-base font-mono text-left">
+                  <code>
+                    <span className="text-purple-400">def</span>{" "}
+                    <span className="text-tech-data">transform</span>
+                    <span className="text-text-secondary">(</span>
+                    <span className="text-orange-400">tech</span>
+                    <span className="text-text-secondary">, </span>
+                    <span className="text-orange-400">data</span>
+                    <span className="text-text-secondary">, </span>
+                    <span className="text-orange-400">ai</span>
+                    <span className="text-text-secondary">):</span>
+                    {"\n"}
+                    {"    "}
+                    <span className="text-purple-400">return</span>{" "}
+                    <span className="text-tech-data">&quot;processos otimizados + decisões potencializadas&quot;</span>
+                  </code>
+                </pre>
+              </div>
+            </div>
 
             {/* Social Links */}
             <div className="flex items-center gap-4 mb-12">
@@ -156,7 +184,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Areas de Atuacao */}
+      {/* Áreas de Atuação */}
       <section className="py-16 bg-dark-900/50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -170,7 +198,7 @@ export default function Home() {
               <div className="text-4xl font-bold text-tech-data mb-2">
                 Dashboards
               </div>
-              <div className="text-text-secondary">Streamlit & Visualizacoes</div>
+              <div className="text-text-secondary">Streamlit & Visualizações</div>
             </div>
             <div className="card card-hover text-center">
               <div className="text-4xl font-bold text-tech-ai mb-2">IA/ML</div>
@@ -184,17 +212,17 @@ export default function Home() {
       <section className="py-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center mb-12">
-            Principais Competencias
+            Principais Competências
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
-              "Analise de Dados",
+              "Análise de Dados",
               "Python",
               "Streamlit",
-              "Visualizacao de Dados",
-              "Inteligencia Artificial",
+              "Visualização de Dados",
+              "Inteligência Artificial",
               "Machine Learning",
-              "Automacao de Processos",
+              "Automação de Processos",
               "SQL",
             ].map((skill) => (
               <div

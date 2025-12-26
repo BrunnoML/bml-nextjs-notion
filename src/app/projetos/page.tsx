@@ -4,23 +4,23 @@ const projects = [
   {
     title: "VeriDados",
     description:
-      "Aplicacao web para verificar, auditar e comparar conjuntos de dados de diversas fontes. Facilita a identificacao de inconsistencias, analise exploratoria e comparacao entre diferentes versoes de dados. Util para validacao pos-ETL.",
-    image: "/images/projeto-veridados.jpg",
+      "Aplicação web para verificar, auditar e comparar conjuntos de dados de diversas fontes. Facilita a identificação de inconsistências, análise exploratória e comparação entre diferentes versões de dados. Útil para validação pós-ETL.",
+    image: "/images/projeto-veridados.png",
     tags: ["Python", "Streamlit", "Pandas", "Auditoria"],
     githubUrl: "https://github.com/BrunnoML/VeriDados",
   },
   {
-    title: "ApT - Audio para Texto",
+    title: "ApT - Áudio para Texto",
     description:
-      "Aplicacao que usa a biblioteca Whisper para transcrever arquivos de audio para texto. Facilita a localizacao de arquivos relevantes por pesquisa textual. Idealizada como projeto de extensao na Faculdade Estacio.",
+      "Aplicação que usa a biblioteca Whisper para transcrever arquivos de áudio para texto. Facilita a localização de arquivos relevantes por pesquisa textual. Idealizada como projeto de extensão na Faculdade Estácio.",
     image: "/images/projeto1.jpg",
-    tags: ["Python", "Whisper", "IA", "Transcricao"],
+    tags: ["Python", "Whisper", "IA", "Transcrição"],
     githubUrl: "https://github.com/BrunnoML/ApT",
   },
   {
     title: "DistilBERT Classifier",
     description:
-      "Pipeline para classificar textos usando DistilBERT para gerar embeddings, seguido de um classificador supervisionado. Inclui interface grafica com Gradio para importacao, treinamento e inferencia.",
+      "Pipeline para classificar textos usando DistilBERT para gerar embeddings, seguido de um classificador supervisionado. Inclui interface gráfica com Gradio para importação, treinamento e inferência.",
     image: "/images/projeto2.jpg",
     tags: ["Python", "DistilBERT", "NLP", "Machine Learning"],
     githubUrl: "https://github.com/BrunnoML/distilbert-classifier",
@@ -37,8 +37,8 @@ export default function Projetos() {
             Meus Projetos
           </h1>
           <p className="text-xl text-text-secondary max-w-2xl mx-auto">
-            Projetos focados em Python, Analise de Dados e Inteligencia
-            Artificial aplicados a resolucao de problemas reais.
+            Projetos focados em Python, Análise de Dados e Inteligência
+            Artificial aplicados à resolução de problemas reais.
           </p>
         </div>
 
@@ -67,7 +67,7 @@ export default function Projetos() {
           ))}
         </div>
 
-        {/* Competencias Section */}
+        {/* Competências Section */}
         <div className="mt-16">
           <h2 className="text-2xl font-bold text-center mb-8">
             Tecnologias Utilizadas

@@ -22,13 +22,13 @@ export default function Footer() {
 
           {/* Links */}
           <div>
-            <h4 className="font-semibold text-text-primary mb-3">Navegacao</h4>
+            <h4 className="font-semibold text-text-primary mb-3">Navegação</h4>
             <nav className="flex flex-col space-y-2">
               <Link
                 href="/"
                 className="text-text-muted hover:text-purple-400 text-sm transition-colors"
               >
-                Inicio
+                Início
               </Link>
               <Link
                 href="/sobre"
