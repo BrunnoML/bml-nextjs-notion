@@ -1,9 +1,12 @@
-// @ts-nocheck
 import { getPostBySlug, getPosts } from "@/lib/notion";
 import NotionPost from "@/app/components/NotionPost";
 import { notFound } from "next/navigation";
 import { BlockObjectResponse, PartialBlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 import { Block } from "@/app/components/NotionPost";
+
+interface PageProps {
+  params: Promise<{ slug: string }>;
+}
 
 // Função para transformar os blocos do Notion no tipo Block esperado pelo NotionPost
 function transformNotionBlocks(blocks: (PartialBlockObjectResponse | BlockObjectResponse)[]): Block[] {
@@ -35,8 +38,8 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function PostPage({ params }: { params: { slug: string } }) {
-  const { slug } = params;
+export default async function PostPage({ params }: PageProps) {
+  const { slug } = await params;
 
   const data = await getPostBySlug(slug);
   if (!data) {

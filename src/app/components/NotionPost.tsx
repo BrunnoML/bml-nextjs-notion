@@ -209,8 +209,8 @@ interface ImageLoaderProps {
         );
 
       case "heading_1":
-        if (!block.heading_2?.rich_text) return <h2 key={id} />;
-        return <h2 key={id}>{renderRichText(block.heading_2.rich_text)}</h2>;
+        if (!block.heading_1?.rich_text) return <h1 key={id} />;
+        return <h1 key={id}>{renderRichText(block.heading_1.rich_text)}</h1>;
 
       case "heading_2":
         if (!block.heading_2?.rich_text) return <h2 key={id} />;
@@ -236,8 +236,13 @@ interface ImageLoaderProps {
         );
 
         case "image":
-  const imageUrl = block.image?.file?.url || block.image?.external?.url;
-  if (!imageUrl) return <div key={id}>[Imagem não encontrada]</div>;
+  const rawImageUrl = block.image?.file?.url || block.image?.external?.url;
+  if (!rawImageUrl) return <div key={id}>[Imagem nao encontrada]</div>;
+
+  // Usa proxy para imagens do Notion S3 (que expiram)
+  const imageUrl = rawImageUrl.includes('amazonaws.com')
+    ? `/api/proxy-image?url=${encodeURIComponent(rawImageUrl)}`
+    : rawImageUrl;
 
   const { isLoading = true, hasError = false } = imageStates[id] || {};
 
@@ -245,16 +250,16 @@ interface ImageLoaderProps {
     <div key={id} className="my-6 mx-auto max-w-full md:max-w-2xl">
       <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
         {isLoading && (
-          <div className="absolute inset-0 flex items-center justify-center bg-gray-100 dark:bg-gray-800 rounded-lg">
+          <div className="absolute inset-0 flex items-center justify-center bg-dark-800 rounded-lg">
             <div className="animate-pulse flex space-x-4">
-              <div className="rounded-full bg-gray-300 dark:bg-gray-600 h-12 w-12"></div>
+              <div className="rounded-full bg-dark-600 h-12 w-12"></div>
             </div>
           </div>
         )}
 
         {hasError && (
-          <div className="absolute inset-0 flex items-center justify-center bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800">
-            <span className="text-red-500 dark:text-red-300 text-sm">
+          <div className="absolute inset-0 flex items-center justify-center bg-red-900/20 rounded-lg border border-red-800">
+            <span className="text-red-300 text-sm">
               Falha ao carregar imagem
             </span>
           </div>
@@ -270,13 +275,13 @@ interface ImageLoaderProps {
             onLoadingComplete={() => setImageState(id, { isLoading: false })}
             onError={() => setImageState(id, { isLoading: false, hasError: true })}
             priority={false}
-            unoptimized={true} // Desativa otimização para imagens do Notion
+            unoptimized={!imageUrl.includes('cloudinary')}
           />
         )}
       </div>
 
       {block.image?.caption?.[0]?.plain_text && (
-        <p className={`text-center text-sm mt-2 ${hasError ? 'text-red-500 dark:text-red-400' : 'text-gray-500 dark:text-gray-400'}`}>
+        <p className={`text-center text-sm mt-2 ${hasError ? 'text-red-400' : 'text-text-muted'}`}>
           {block.image.caption[0].plain_text}
         </p>
       )}
