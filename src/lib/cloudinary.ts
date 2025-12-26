@@ -10,15 +10,27 @@ cloudinary.config({
 /**
  * Gera um ID publico estavel a partir da URL da imagem do Notion
  * Isso permite identificar imagens ja existentes no Cloudinary
+ *
+ * URLs do Notion S3 tem o formato:
+ * https://prod-files-secure.s3.../workspace-id/file-id/filename.ext
  */
 export function generatePublicId(notionUrl: string): string {
-  // Extrai o ID do arquivo da URL S3 do Notion
-  const match = notionUrl.match(/\/([a-f0-9-]{36})\.[a-z]+/i);
+  // Extrai o file-id (UUID) da URL S3 do Notion
+  // Formato: /workspace-uuid/file-uuid/filename.ext
+  const match = notionUrl.match(/\/([a-f0-9-]{36})\/[^\/]+\.[a-z]+/i);
   if (match) {
     return match[1];
   }
-  // Fallback: cria hash da URL
-  return Buffer.from(notionUrl).toString('base64').slice(0, 32).replace(/[/+=]/g, '_');
+
+  // Fallback: usa hash SHA-like do caminho completo
+  // Pega apenas a parte do path apos o dominio
+  const pathMatch = notionUrl.match(/amazonaws\.com\/(.+?)(\?|$)/);
+  if (pathMatch) {
+    return Buffer.from(pathMatch[1]).toString('base64').slice(0, 40).replace(/[/+=]/g, '_');
+  }
+
+  // Ultimo fallback
+  return Buffer.from(notionUrl).toString('base64').slice(0, 40).replace(/[/+=]/g, '_');
 }
 
 /**
@@ -44,7 +56,7 @@ export async function uploadToCloudinary(
     const result = await cloudinary.uploader.upload(imageUrl, {
       public_id: publicId,
       folder: 'notion-blog',
-      overwrite: false,
+      overwrite: true, // Permite atualizar imagens existentes
       resource_type: 'image',
       // Otimizacoes automaticas
       transformation: [
