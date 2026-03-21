@@ -99,14 +99,9 @@ export default function AptPage() {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="https://www.brunnoml.com.br/apt"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-primary text-center"
-            >
+            <Link href="/produtos/apt/licenca" className="btn-primary text-center no-underline">
               Adquirir Licença
-            </a>
+            </Link>
             <a
               href="https://github.com/BrunnoML/ApT"
               target="_blank"
@@ -284,14 +279,12 @@ export default function AptPage() {
                   <span>Suporte relacionado ao uso da licença</span>
                 </li>
               </ul>
-              <a
-                href="https://www.brunnoml.com.br/apt"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-primary w-full text-center mt-6 block"
+              <Link
+                href="/produtos/apt/licenca"
+                className="btn-primary w-full text-center mt-6 block no-underline"
               >
                 Adquirir Licença
-              </a>
+              </Link>
             </div>
 
           </div>
@@ -354,14 +347,9 @@ export default function AptPage() {
               </svg>
               Baixar grátis no GitHub
             </a>
-            <a
-              href="https://www.brunnoml.com.br/apt"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-primary"
-            >
+            <Link href="/produtos/apt/licenca" className="btn-primary no-underline">
               Adquirir Licença →
-            </a>
+            </Link>
           </div>
         </div>
       </section>
