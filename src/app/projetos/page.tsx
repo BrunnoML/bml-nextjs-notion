@@ -12,10 +12,11 @@ const projects = [
   {
     title: "ApT - Áudio para Texto",
     description:
-      "Aplicação que usa a biblioteca Whisper para transcrever arquivos de áudio para texto. Facilita a localização de arquivos relevantes por pesquisa textual. Idealizada como projeto de extensão na Faculdade Estácio.",
+      "Software de transcrição de áudio licenciado para uso local. Transcreve arquivos de áudio com IA (Whisper) e gera laudo técnico em formato PDF com documentação da cadeia de custódia.",
     image: "/images/projeto1.jpg",
-    tags: ["Python", "Whisper", "IA", "Transcrição"],
+    tags: ["Python", "Whisper", "IA", "Transcrição", "PDF"],
     githubUrl: "https://github.com/BrunnoML/ApT",
+    liveUrl: "/produtos/apt",
   },
   {
     title: "DistilBERT Classifier",
