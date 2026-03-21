@@ -233,20 +233,20 @@ export default function AptPage() {
               </p>
               <ul className="space-y-3 text-sm text-text-secondary">
                 <li className="flex items-start gap-2">
-                  <span className="text-accent-success mt-0.5">✓</span>
-                  Transcrição de até <strong className="text-text-primary">30 minutos</strong> de áudio (acumulado)
+                  <span className="text-accent-success mt-0.5 flex-shrink-0">✓</span>
+                  <span>Transcrição de até <strong className="text-text-primary">30 minutos</strong> de áudio (acumulado)</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-accent-success mt-0.5">✓</span>
-                  Geração de até <strong className="text-text-primary">1 laudo</strong> técnico em formato PDF
+                  <span className="text-accent-success mt-0.5 flex-shrink-0">✓</span>
+                  <span>Geração de até <strong className="text-text-primary">1 laudo</strong> técnico em formato PDF</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-accent-success mt-0.5">✓</span>
-                  Uso local, sem envio de dados
+                  <span className="text-accent-success mt-0.5 flex-shrink-0">✓</span>
+                  <span>Uso local, sem envio de dados</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-accent-success mt-0.5">✓</span>
-                  Interface completa para avaliação
+                  <span className="text-accent-success mt-0.5 flex-shrink-0">✓</span>
+                  <span>Interface completa para avaliação</span>
                 </li>
               </ul>
             </div>
@@ -264,24 +264,24 @@ export default function AptPage() {
               </p>
               <ul className="space-y-3 text-sm text-text-secondary">
                 <li className="flex items-start gap-2">
-                  <span className="text-accent-primary mt-0.5">✓</span>
-                  Transcrição <strong className="text-text-primary">ilimitada</strong>
+                  <span className="text-accent-primary mt-0.5 flex-shrink-0">✓</span>
+                  <span>Transcrição <strong className="text-text-primary">ilimitada</strong></span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-accent-primary mt-0.5">✓</span>
-                  Geração <strong className="text-text-primary">ilimitada</strong> de laudos técnicos em PDF
+                  <span className="text-accent-primary mt-0.5 flex-shrink-0">✓</span>
+                  <span>Geração <strong className="text-text-primary">ilimitada</strong> de laudos técnicos em PDF</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-accent-primary mt-0.5">✓</span>
-                  Cadeia de custódia completa em cada laudo
+                  <span className="text-accent-primary mt-0.5 flex-shrink-0">✓</span>
+                  <span>Cadeia de custódia completa em cada laudo</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-accent-primary mt-0.5">✓</span>
-                  Acesso a atualizações durante a vigência da licença
+                  <span className="text-accent-primary mt-0.5 flex-shrink-0">✓</span>
+                  <span>Acesso a atualizações durante a vigência da licença</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-accent-primary mt-0.5">✓</span>
-                  Suporte relacionado ao uso da licença
+                  <span className="text-accent-primary mt-0.5 flex-shrink-0">✓</span>
+                  <span>Suporte relacionado ao uso da licença</span>
                 </li>
               </ul>
               <a
