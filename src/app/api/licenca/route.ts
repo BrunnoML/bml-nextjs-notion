@@ -23,9 +23,7 @@ export async function POST(request: NextRequest) {
     }
 
     await resend.emails.send({
-      // Após verificar o domínio brunnoml.com.br no Resend,
-      // troque para: "ApT <noreply@brunnoml.com.br>"
-      from: "onboarding@resend.dev",
+      from: "ApT <noreply@brunnoml.com.br>",
       to: "brunnoml@gmail.com",
       subject: `[ApT] Solicitação de licença — ${nome}`,
       html: `
