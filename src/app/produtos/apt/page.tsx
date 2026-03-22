@@ -154,7 +154,7 @@ export default function AptPage() {
           <p className="text-text-muted mb-8">
             Do download ao laudo PDF em menos de 4 minutos.
           </p>
-          <div className="relative w-full rounded-xl overflow-hidden border border-dark-600" style={{paddingTop: "56.25%"}}>
+          <div className="video-wrapper relative w-full rounded-xl overflow-hidden border border-dark-600">
             <iframe
               className="absolute inset-0 w-full h-full"
               src="https://www.youtube-nocookie.com/embed/q3Pk7cu-Kg4"
