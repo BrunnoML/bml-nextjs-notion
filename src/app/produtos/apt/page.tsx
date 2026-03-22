@@ -127,6 +127,17 @@ export default function AptPage() {
           <p className="text-xs text-text-muted mt-4">
             Windows 10/11 · 64-bit · 194 MB · Grátis para avaliação
           </p>
+
+          {/* Aviso SmartScreen */}
+          <div className="mt-6 mx-auto max-w-xl rounded-lg border border-yellow-500/30 bg-yellow-500/5 px-4 py-3 text-left">
+            <p className="text-xs text-yellow-400 font-semibold mb-1">⚠️ Aviso do Windows ao instalar</p>
+            <p className="text-xs text-text-muted">
+              O Windows pode exibir um alerta do SmartScreen pois o ApT ainda não possui certificado digital de código.
+              Clique em <strong className="text-text-secondary">"Mais informações"</strong> e depois em{" "}
+              <strong className="text-text-secondary">"Executar assim mesmo"</strong> para prosseguir.
+              Isso é normal para softwares independentes.
+            </p>
+          </div>
         </div>
 
         {/* Background glow */}
@@ -136,8 +147,27 @@ export default function AptPage() {
         </div>
       </section>
 
-      {/* O problema */}
+      {/* Vídeo demo */}
       <section className="py-16 bg-dark-900/50">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl font-bold mb-4 mt-0">Veja o ApT em ação</h2>
+          <p className="text-text-muted mb-8">
+            Do download ao laudo PDF em menos de 2 minutos.
+          </p>
+          <div className="relative w-full rounded-xl overflow-hidden border border-dark-600" style={{paddingTop: "56.25%"}}>
+            <iframe
+              className="absolute inset-0 w-full h-full"
+              src="https://www.youtube-nocookie.com/embed/SEU_VIDEO_ID_AQUI"
+              title="ApT — demonstração"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* O problema */}
+      <section className="py-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center mb-12 mt-0">
             O gargalo que o ApT elimina
