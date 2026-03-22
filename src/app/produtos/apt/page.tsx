@@ -152,7 +152,7 @@ export default function AptPage() {
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold mb-4 mt-0">Veja o ApT em ação</h2>
           <p className="text-text-muted mb-8">
-            Do download ao laudo PDF em menos de 2 minutos.
+            Do download ao laudo PDF em menos de 4 minutos.
           </p>
           <div className="relative w-full rounded-xl overflow-hidden border border-dark-600" style={{paddingTop: "56.25%"}}>
             <iframe
