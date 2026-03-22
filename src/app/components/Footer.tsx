@@ -48,6 +48,12 @@ export default function Footer() {
               >
                 Blog
               </Link>
+              <Link
+                href="/produtos"
+                className="text-text-muted hover:text-purple-400 text-sm transition-colors"
+              >
+                Produtos
+              </Link>
             </nav>
           </div>
 

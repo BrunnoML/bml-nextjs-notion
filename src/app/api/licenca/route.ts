@@ -5,7 +5,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request: NextRequest) {
   try {
-    const { nome, email, profissao, mensagem } = await request.json();
+    const { nome, email, telefone, plano, profissao, mensagem } = await request.json();
 
     if (!nome || !email) {
       return NextResponse.json(
@@ -43,6 +43,18 @@ export async function POST(request: NextRequest) {
                   <a href="mailto:${email}" style="color: #3b82f6;">${email}</a>
                 </td>
               </tr>
+              ${telefone ? `
+              <tr style="border-top: 1px solid #1e2836;">
+                <td style="padding: 10px 0; color: #94a3b8; font-size: 14px;">WhatsApp</td>
+                <td style="padding: 10px 0; color: #f8fafc; font-size: 14px;">
+                  <a href="https://wa.me/55${telefone.replace(/\D/g, '')}" style="color: #25d366;">${telefone}</a>
+                </td>
+              </tr>` : ""}
+              ${plano ? `
+              <tr style="border-top: 1px solid #1e2836;">
+                <td style="padding: 10px 0; color: #94a3b8; font-size: 14px;">Plano</td>
+                <td style="padding: 10px 0; color: #f8fafc; font-size: 14px; font-weight: bold;">${plano}</td>
+              </tr>` : ""}
               ${profissao ? `
               <tr style="border-top: 1px solid #1e2836;">
                 <td style="padding: 10px 0; color: #94a3b8; font-size: 14px;">Profissão</td>

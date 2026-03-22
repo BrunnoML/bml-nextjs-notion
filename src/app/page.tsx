@@ -167,11 +167,11 @@ export default function Home() {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4">
-              <Link href="/projetos" className="btn-primary">
-                Ver Projetos
+              <Link href="/produtos" className="btn-primary">
+                Ver Produtos
               </Link>
-              <Link href="/blog" className="btn-secondary">
-                Ler Blog
+              <Link href="/projetos" className="btn-secondary">
+                Ver Projetos
               </Link>
             </div>
           </div>
@@ -233,6 +233,54 @@ export default function Home() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Produtos Section */}
+      <section className="py-16 bg-dark-900/50">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold text-center mb-4">
+            Produtos
+          </h2>
+          <p className="text-center text-text-muted mb-12">
+            Software licenciado para uso local — sem dependência de servidores externos.
+          </p>
+          <Link href="/produtos/apt" className="block no-underline hover:no-underline group">
+            <div className="card card-hover border-accent-primary/20 hover:border-accent-primary/50 transition-all">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
+                <Image
+                  src="/images/apt-icon.png"
+                  alt="ApT"
+                  width={80}
+                  height={80}
+                  className="flex-shrink-0"
+                />
+                <div className="flex-1">
+                  <div className="flex items-center gap-3 mb-2">
+                    <h3 className="text-xl font-bold text-text-primary mt-0 mb-0">ApT — Áudio para Texto</h3>
+                    <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium bg-accent-success/10 border border-accent-success/30 text-accent-success">
+                      <span className="w-1.5 h-1.5 rounded-full bg-accent-success" />
+                      Disponível
+                    </span>
+                  </div>
+                  <p className="text-text-muted text-sm mb-4">
+                    Transcrição automática de áudios com IA 100% local. Gera laudo técnico em PDF
+                    com hash SHA-256 e documentação da cadeia de custódia — pronto para juntada ao processo.
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {["Whisper IA", "100% Local", "Laudo PDF", "Cadeia de Custódia"].map((tag) => (
+                      <span key={tag} className="px-2 py-1 text-xs rounded bg-dark-700 text-text-secondary border border-dark-600">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <svg className="w-5 h-5 text-text-muted group-hover:text-accent-primary transition-colors flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </div>
+            </div>
+          </Link>
         </div>
       </section>
     </div>

@@ -11,6 +11,8 @@ export default function LicencaPage() {
   const [form, setForm] = useState({
     nome: "",
     email: "",
+    telefone: "",
+    plano: "",
     profissao: "",
     mensagem: "",
   });
@@ -124,6 +126,41 @@ export default function LicencaPage() {
               />
             </div>
 
+            {/* Telefone */}
+            <div>
+              <label htmlFor="telefone" className="block text-sm font-medium text-text-secondary mb-2">
+                WhatsApp / Telefone
+              </label>
+              <input
+                id="telefone"
+                name="telefone"
+                type="tel"
+                value={form.telefone}
+                onChange={handleChange}
+                placeholder="(81) 99999-9999 (opcional)"
+                className="w-full px-4 py-3 rounded-lg bg-dark-900 border border-dark-600 text-text-primary placeholder-text-muted focus:outline-none focus:border-accent-primary/60 transition-colors"
+              />
+            </div>
+
+            {/* Plano */}
+            <div>
+              <label htmlFor="plano" className="block text-sm font-medium text-text-secondary mb-2">
+                Plano desejado
+              </label>
+              <select
+                id="plano"
+                name="plano"
+                value={form.plano}
+                onChange={handleChange}
+                className="w-full px-4 py-3 rounded-lg bg-dark-900 border border-dark-600 text-text-primary focus:outline-none focus:border-accent-primary/60 transition-colors"
+              >
+                <option value="">Selecione (opcional)</option>
+                <option value="Licença Mensal (30 dias)">Licença Mensal — 30 dias</option>
+                <option value="Licença Anual (12 meses)">Licença Anual — 12 meses (melhor custo-benefício)</option>
+                <option value="Licença Institucional">Licença Institucional — unidade/equipe</option>
+              </select>
+            </div>
+
             {/* Profissão */}
             <div>
               <label htmlFor="profissao" className="block text-sm font-medium text-text-secondary mb-2">
@@ -137,6 +174,7 @@ export default function LicencaPage() {
                 className="w-full px-4 py-3 rounded-lg bg-dark-900 border border-dark-600 text-text-primary focus:outline-none focus:border-accent-primary/60 transition-colors"
               >
                 <option value="">Selecione (opcional)</option>
+                <option value="Escrivão / Agente de Polícia">Escrivão / Agente de Polícia</option>
                 <option value="Delegado / Investigador">Delegado / Investigador</option>
                 <option value="Advogado / Defensor Público">Advogado / Defensor Público</option>
                 <option value="Promotor / Magistrado">Promotor / Magistrado</option>

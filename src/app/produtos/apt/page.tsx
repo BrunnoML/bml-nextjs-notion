@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 const features = [
   {
@@ -79,9 +80,20 @@ export default function AptPage() {
             </span>
           </div>
 
+          {/* Logo */}
+          <div className="flex justify-center mb-6">
+            <Image
+              src="/images/apt-icon.png"
+              alt="ApT — Áudio para Texto"
+              width={120}
+              height={120}
+              priority
+            />
+          </div>
+
           {/* Title */}
           <h1 className="text-5xl md:text-7xl font-bold mb-4 mt-0">
-            <span className="text-text-primary">🎙️ Ap</span>
+            <span className="text-text-primary">Ap</span>
             <span className="bg-gradient-to-r from-accent-primary to-accent-tertiary bg-clip-text text-transparent">
               T
             </span>
@@ -213,9 +225,9 @@ export default function AptPage() {
           <p className="text-center text-text-muted mb-12">
             O ApT é um software licenciado para uso local — não há prestação de serviço ou dependência de infraestrutura externa.
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-            {/* Gratuito */}
+            {/* Gratuita */}
             <div className="card">
               <div className="flex items-center gap-3 mb-4">
                 <span className="w-3 h-3 rounded-full bg-accent-success" />
@@ -229,11 +241,11 @@ export default function AptPage() {
               <ul className="space-y-3 text-sm text-text-secondary">
                 <li className="flex items-start gap-2">
                   <span className="text-accent-success mt-0.5 flex-shrink-0">✓</span>
-                  <span>Transcrição de até <strong className="text-text-primary">30 minutos</strong> de áudio (acumulado)</span>
+                  <span>Até <strong className="text-text-primary">30 minutos</strong> de áudio (acumulado)</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-accent-success mt-0.5 flex-shrink-0">✓</span>
-                  <span>Geração de até <strong className="text-text-primary">1 laudo</strong> técnico em formato PDF</span>
+                  <span>Até <strong className="text-text-primary">1 laudo</strong> técnico em PDF</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-accent-success mt-0.5 flex-shrink-0">✓</span>
@@ -246,16 +258,16 @@ export default function AptPage() {
               </ul>
             </div>
 
-            {/* Licenciada */}
-            <div className="card border-accent-primary/40 bg-gradient-to-b from-dark-800 to-dark-900">
+            {/* Mensal */}
+            <div className="card border-accent-primary/30">
               <div className="flex items-center gap-3 mb-4">
                 <span className="w-3 h-3 rounded-full bg-accent-primary" />
                 <h3 className="text-xl font-bold text-text-primary mt-0 mb-0">
-                  Licença Individual
+                  Licença Mensal
                 </h3>
               </div>
               <p className="text-text-muted text-sm mb-6">
-                Para uso profissional sem limitações.
+                Para uso profissional por 30 dias.
               </p>
               <ul className="space-y-3 text-sm text-text-secondary">
                 <li className="flex items-start gap-2">
@@ -264,19 +276,57 @@ export default function AptPage() {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-accent-primary mt-0.5 flex-shrink-0">✓</span>
-                  <span>Geração <strong className="text-text-primary">ilimitada</strong> de laudos técnicos em PDF</span>
+                  <span>Laudos técnicos em PDF <strong className="text-text-primary">ilimitados</strong></span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-accent-primary mt-0.5 flex-shrink-0">✓</span>
-                  <span>Cadeia de custódia completa em cada laudo</span>
+                  <span>Cadeia de custódia completa</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-accent-primary mt-0.5 flex-shrink-0">✓</span>
-                  <span>Acesso a atualizações durante a vigência da licença</span>
+                  <span>Suporte ao uso da licença</span>
+                </li>
+              </ul>
+              <Link
+                href="/produtos/apt/licenca"
+                className="btn-secondary w-full text-center mt-6 block no-underline"
+              >
+                Solicitar
+              </Link>
+            </div>
+
+            {/* Anual */}
+            <div className="card border-accent-primary/40 bg-gradient-to-b from-dark-800 to-dark-900">
+              <div className="flex items-center gap-3 mb-1">
+                <span className="w-3 h-3 rounded-full bg-accent-primary" />
+                <h3 className="text-xl font-bold text-text-primary mt-0 mb-0">
+                  Licença Anual
+                </h3>
+              </div>
+              <p className="text-xs text-accent-primary font-medium mb-3">Melhor custo-benefício</p>
+              <p className="text-text-muted text-sm mb-6">
+                Para uso profissional por 12 meses.
+              </p>
+              <ul className="space-y-3 text-sm text-text-secondary">
+                <li className="flex items-start gap-2">
+                  <span className="text-accent-primary mt-0.5 flex-shrink-0">✓</span>
+                  <span>Transcrição <strong className="text-text-primary">ilimitada</strong></span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-accent-primary mt-0.5 flex-shrink-0">✓</span>
-                  <span>Suporte relacionado ao uso da licença</span>
+                  <span>Laudos técnicos em PDF <strong className="text-text-primary">ilimitados</strong></span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-accent-primary mt-0.5 flex-shrink-0">✓</span>
+                  <span>Cadeia de custódia completa</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-accent-primary mt-0.5 flex-shrink-0">✓</span>
+                  <span>Acesso a atualizações na vigência</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-accent-primary mt-0.5 flex-shrink-0">✓</span>
+                  <span>Suporte ao uso da licença</span>
                 </li>
               </ul>
               <Link
@@ -333,9 +383,12 @@ export default function AptPage() {
             Pronto para eliminar o gargalo?
           </h2>
           <p className="text-text-muted mb-8">
-            Experimente a versão gratuita e avalie o fluxo completo antes de adquirir a licença.
+            Solicite a licença — a versão gratuita para avaliação está inclusa.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/produtos/apt/licenca" className="btn-primary no-underline">
+              Adquirir Licença →
+            </Link>
             <a
               href="https://github.com/BrunnoML/ApT"
               target="_blank"
@@ -345,11 +398,8 @@ export default function AptPage() {
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
               </svg>
-              Baixar grátis no GitHub
+              Ver código no GitHub
             </a>
-            <Link href="/produtos/apt/licenca" className="btn-primary no-underline">
-              Adquirir Licença →
-            </Link>
           </div>
         </div>
       </section>
