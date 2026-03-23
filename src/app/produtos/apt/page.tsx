@@ -112,13 +112,13 @@ export default function AptPage() {
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="https://github.com/BrunnoML/ApT/releases/download/v1.0.0/ApT-Setup-v1.0.0.exe"
+              href="https://github.com/BrunnoML/ApT/releases/download/v1.1.0/ApT-Setup-v1.1.0.exe"
               className="btn-primary inline-flex items-center justify-center gap-2 no-underline"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
               </svg>
-              Baixar para Windows — v1.0.0
+              Baixar para Windows — v1.1.0
             </a>
             <Link href="/produtos/apt/licenca" className="btn-secondary text-center no-underline">
               Adquirir Licença
@@ -221,6 +221,51 @@ export default function AptPage() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Formatos suportados */}
+      <section className="py-16 bg-dark-900/50">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold text-center mb-4 mt-0">Formatos de áudio suportados</h2>
+          <p className="text-center text-text-muted mb-10">
+            Compatível com os principais apps de mensagem e ferramentas forenses — incluindo extrações UFED/Cellebrite.
+          </p>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm border-collapse">
+              <thead>
+                <tr className="border-b border-dark-600">
+                  <th className="text-left py-2 px-4 text-text-secondary font-semibold">Extensão</th>
+                  <th className="text-left py-2 px-4 text-text-secondary font-semibold">Origem principal</th>
+                </tr>
+              </thead>
+              <tbody className="text-text-muted">
+                {[
+                  [".opus", "WhatsApp (mensagens de voz atuais), Signal, Viber"],
+                  [".m4a", "iOS, Android, Signal, WhatsApp (versões antigas)"],
+                  [".ogg / .oga", "Telegram"],
+                  [".mp3", "Formato universal"],
+                  [".wav", "Gravações diversas"],
+                  [".mp4", "Instagram, Facebook Messenger (pista de áudio)"],
+                  [".aac", "Facebook, Android"],
+                  [".amr", "Android antigo, WhatsApp versões antigas, WeChat"],
+                  [".awb", "AMR Wideband — variante de .amr"],
+                  [".3gp", "Gravador nativo Android, extrações UFED/Cellebrite"],
+                  [".m4b", "iOS Voice Memos"],
+                  [".flac", "Gravações de alta qualidade"],
+                  [".wma", "Dispositivos Windows antigos"],
+                ].map(([ext, origin]) => (
+                  <tr key={ext} className="border-b border-dark-700/50 hover:bg-dark-800/50 transition-colors">
+                    <td className="py-2 px-4 font-mono text-accent-primary">{ext}</td>
+                    <td className="py-2 px-4">{origin}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="text-center text-xs text-text-muted mt-6">
+            Todos os formatos são processados via <strong className="text-text-secondary">FFmpeg embutido</strong> — nenhuma instalação adicional necessária.
+          </p>
         </div>
       </section>
 
