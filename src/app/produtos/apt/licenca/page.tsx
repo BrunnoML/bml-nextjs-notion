@@ -14,6 +14,7 @@ export default function LicencaPage() {
     telefone: "",
     plano: "",
     profissao: "",
+    machine_id: "",
     mensagem: "",
   });
 
@@ -182,6 +183,26 @@ export default function LicencaPage() {
                 <option value="Estudante / Pesquisador">Estudante / Pesquisador</option>
                 <option value="Outro">Outro</option>
               </select>
+            </div>
+
+            {/* Código da máquina */}
+            <div>
+              <label htmlFor="machine_id" className="block text-sm font-medium text-text-secondary mb-2">
+                Código da máquina <span className="text-accent-error">*</span>
+              </label>
+              <input
+                id="machine_id"
+                name="machine_id"
+                type="text"
+                required
+                value={form.machine_id}
+                onChange={handleChange}
+                placeholder="XXXX-XXXX-XXXX (exibido na aba Licença do ApT)"
+                className="w-full px-4 py-3 rounded-lg bg-dark-900 border border-dark-600 text-text-primary placeholder-text-muted focus:outline-none focus:border-accent-primary/60 transition-colors font-mono tracking-widest"
+              />
+              <p className="text-xs text-text-muted mt-1">
+                Abra o ApT → aba Licença → copie o código exibido
+              </p>
             </div>
 
             {/* Mensagem */}
