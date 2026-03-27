@@ -1,30 +1,32 @@
 import { NextAuthOptions } from "next-auth";
-import EmailProvider from "next-auth/providers/email";
-
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL!;
+import CredentialsProvider from "next-auth/providers/credentials";
 
 export const authOptions: NextAuthOptions = {
   providers: [
-    EmailProvider({
-      server: {
-        host: "smtp.resend.com",
-        port: 465,
-        secure: true,
-        auth: {
-          user: "resend",
-          pass: process.env.RESEND_API_KEY,
-        },
+    CredentialsProvider({
+      name: "credentials",
+      credentials: {
+        email: { label: "E-mail", type: "email" },
+        password: { label: "Senha", type: "password" },
       },
-      from: "ApT Admin <noreply@brunnoml.com.br>",
+      async authorize(credentials) {
+        const email = credentials?.email?.trim();
+        const password = credentials?.password;
+
+        if (
+          email === process.env.ADMIN_EMAIL &&
+          password === process.env.ADMIN_PASSWORD
+        ) {
+          return { id: "1", email };
+        }
+        return null;
+      },
     }),
   ],
   session: {
     strategy: "jwt",
   },
   callbacks: {
-    async signIn({ user }) {
-      return user.email === ADMIN_EMAIL;
-    },
     async jwt({ token, user }) {
       if (user) token.email = user.email;
       return token;
