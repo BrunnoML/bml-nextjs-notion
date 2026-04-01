@@ -342,9 +342,10 @@ export default function AptPage() {
                   Licença Mensal
                 </h3>
               </div>
-              <p className="text-text-muted text-sm mb-6">
-                Para uso profissional por 30 dias.
-              </p>
+              <div className="mb-6">
+                <span className="text-3xl font-bold text-text-primary">R$ 20</span>
+                <span className="text-text-muted text-sm ml-1">/ mês</span>
+              </div>
               <ul className="space-y-3 text-sm text-text-secondary">
                 <li className="flex items-start gap-2">
                   <span className="text-accent-primary mt-0.5 flex-shrink-0">✓</span>
@@ -380,9 +381,11 @@ export default function AptPage() {
                 </h3>
               </div>
               <p className="text-xs text-accent-primary font-medium mb-3">Melhor custo-benefício</p>
-              <p className="text-text-muted text-sm mb-6">
-                Para uso profissional por 12 meses.
-              </p>
+              <div className="mb-6">
+                <span className="text-3xl font-bold text-text-primary">R$ 197</span>
+                <span className="text-text-muted text-sm ml-1">/ ano</span>
+                <p className="text-xs text-text-muted mt-1">equivale a R$ 16,40/mês</p>
+              </div>
               <ul className="space-y-3 text-sm text-text-secondary">
                 <li className="flex items-start gap-2">
                   <span className="text-accent-primary mt-0.5 flex-shrink-0">✓</span>
@@ -414,6 +417,70 @@ export default function AptPage() {
             </div>
 
           </div>
+
+          {/* Institucional + argumento de valor */}
+          <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            {/* Institucional */}
+            <div className="card border-dark-600">
+              <div className="flex items-center gap-3 mb-4">
+                <span className="w-3 h-3 rounded-full bg-accent-tertiary" />
+                <h3 className="text-lg font-bold text-text-primary mt-0 mb-0">
+                  Licença Institucional
+                </h3>
+              </div>
+              <p className="text-text-muted text-sm mb-4">
+                Para delegacias, promotorias, defensorias e equipes. Múltiplos usuários com valor por máquina.
+              </p>
+              <ul className="space-y-2 text-sm text-text-secondary mb-6">
+                <li className="flex items-start gap-2">
+                  <span className="text-accent-tertiary mt-0.5 flex-shrink-0">✓</span>
+                  <span>Todas as funcionalidades da licença anual</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-accent-tertiary mt-0.5 flex-shrink-0">✓</span>
+                  <span>Logo da instituição no laudo PDF</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-accent-tertiary mt-0.5 flex-shrink-0">✓</span>
+                  <span>Preço negociado por volume de usuários</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-accent-tertiary mt-0.5 flex-shrink-0">✓</span>
+                  <span>Possibilidade de orçamento formal</span>
+                </li>
+              </ul>
+              <Link
+                href="/produtos/apt/licenca"
+                className="btn-secondary w-full text-center block no-underline"
+              >
+                Solicitar orçamento
+              </Link>
+            </div>
+
+            {/* Argumento de valor */}
+            <div className="card border-dark-600 bg-dark-900/50">
+              <h3 className="text-lg font-bold text-text-primary mt-0 mb-4">
+                Vale a pena?
+              </h3>
+              <div className="space-y-3 text-sm text-text-muted">
+                <div className="flex items-start gap-3">
+                  <span className="text-2xl">⏱️</span>
+                  <p>Um caso com <strong className="text-text-secondary">500 áudios de WhatsApp</strong> leva semanas de escuta manual. O ApT processa overnight.</p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="text-2xl">💰</span>
+                  <p>O mesmo processamento via API na nuvem custaria <strong className="text-text-secondary">~R$ 15 por caso</strong> — e ainda enviaria seus dados para servidores externos.</p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="text-2xl">🏛️</span>
+                  <p>Para uma delegacia com 5 escrivães: <strong className="text-text-secondary">menos de R$ 8/mês por pessoa</strong> no plano institucional.</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
           <p className="text-center text-xs text-text-muted mt-6">
             Consulte o{" "}
             <a
