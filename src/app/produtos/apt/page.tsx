@@ -12,7 +12,7 @@ const features = [
     icon: "📄",
     title: "Laudo Técnico PDF",
     description:
-      "Geração de laudo técnico em formato PDF com hash SHA-256 e elementos de documentação da cadeia de custódia.",
+      "Geração de laudo técnico em PDF com hash SHA-256 do material processado, atendendo aos requisitos de integridade da prova digital (Lei 13.964/2019, Art. 158-A).",
   },
   {
     icon: "🔒",
@@ -197,7 +197,7 @@ export default function AptPage() {
                 Laudos demorados
               </h3>
               <p className="text-text-muted text-sm">
-                Laudo técnico em formato PDF gerado automaticamente com hash SHA-256 do material processado.
+                Laudo técnico em PDF gerado automaticamente com hash SHA-256, atendendo aos requisitos de integridade da prova digital (Lei 13.964/2019).
               </p>
             </div>
           </div>
@@ -357,7 +357,7 @@ export default function AptPage() {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-accent-primary mt-0.5 flex-shrink-0">✓</span>
-                  <span>Cadeia de custódia completa</span>
+                  <span>Hash SHA-256 + documentação forense (Lei 13.964/2019)</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-accent-primary mt-0.5 flex-shrink-0">✓</span>
@@ -397,7 +397,7 @@ export default function AptPage() {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-accent-primary mt-0.5 flex-shrink-0">✓</span>
-                  <span>Cadeia de custódia completa</span>
+                  <span>Hash SHA-256 + documentação forense (Lei 13.964/2019)</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-accent-primary mt-0.5 flex-shrink-0">✓</span>

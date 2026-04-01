@@ -6,7 +6,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request: NextRequest) {
   try {
-    const { nome, email, telefone, plano, profissao, machine_id, mensagem } = await request.json();
+    const { nome, email, telefone, plano, profissao, machine_id, mensagem, pix_confirmado } = await request.json();
 
     if (!nome || !email) {
       return NextResponse.json(
@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
     await resend.emails.send({
       from: "ApT <noreply@brunnoml.com.br>",
       to: "brunnoml@gmail.com",
-      subject: `[ApT] Nova solicitação de licença — ${nome}`,
+      subject: `[ApT]${pix_confirmado ? " 💰 PIX INFORMADO —" : ""} Nova solicitação de licença — ${nome}`,
       html: `
         <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; color: #1a1a2e;">
           <div style="background: #0f1419; padding: 24px; border-radius: 8px 8px 0 0;">
@@ -79,6 +79,15 @@ export async function POST(request: NextRequest) {
               <tr style="border-top: 1px solid #1e2836;">
                 <td style="padding: 10px 0; color: #94a3b8; font-size: 14px;">Máquina</td>
                 <td style="padding: 10px 0; color: #f8fafc; font-size: 14px; font-family: monospace;">${machine_id}</td>
+              </tr>
+              <tr style="border-top: 1px solid #1e2836;">
+                <td style="padding: 10px 0; color: #94a3b8; font-size: 14px;">PIX</td>
+                <td style="padding: 10px 0; font-size: 14px;">
+                  ${pix_confirmado
+                    ? `<span style="color: #22c55e; font-weight: bold;">✓ Pagamento informado pelo usuário</span>`
+                    : `<span style="color: #64748b;">Não informado</span>`
+                  }
+                </td>
               </tr>
               ${mensagem ? `
               <tr style="border-top: 1px solid #1e2836;">
