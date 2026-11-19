@@ -1,7 +1,7 @@
 <h1 align="center">BrunnoML - Portfólio & Blog</h1>
 
 <p align="center">
-  Site pessoal com blog integrado ao Notion, cache de imagens via Cloudinary e deploy automático na Vercel.
+  Site pessoal com blog integrado ao Notion e deploy automático na Vercel.
 </p>
 
 <p align="center">
@@ -50,6 +50,8 @@ O **BrunnoML** é um portfólio pessoal focado em **Python, Dados e IA**, com as
 ---
 
 ## 🏗 Arquitetura
+
+O blog atual serve imagens privadas do Notion pelo proxy, que verifica a publicação do post a cada solicitação. As referências ao Cloudinary abaixo descrevem a arquitetura anterior. As variáveis `CLOUDINARY_*` deixaram de ser usadas pelo site.
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
