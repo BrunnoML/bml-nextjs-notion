@@ -10,20 +10,19 @@ interface Post {
   tags: string[];
 }
 
-// Configurar revalidação para 5 minutos (300 segundos)
-export const revalidate = 300;
+export const dynamic = 'force-dynamic';
 
 export default async function Blog() {
   let posts: Post[] = [];
   try {
     posts = await getPosts();
-  } catch (error: any) {
+  } catch (error) {
     console.error("Erro ao buscar os posts:", error);
     return (
       <div className="p-8">
         <h1>Blog</h1>
         <p className="text-red-500 dark:text-red-400">
-          {error.message || "Falha ao carregar os posts. Tente novamente mais tarde."}
+          Falha ao carregar os posts. Tente novamente mais tarde.
         </p>
       </div>
     );

@@ -42,7 +42,7 @@ interface NotionProperties {
   slug: NotionRichTextProperty;
   date: NotionDateProperty;
   tag: NotionMultiSelectProperty;
-  Published: { type: 'checkbox'; checkbox: boolean };
+  published: { type: 'checkbox'; checkbox: boolean };
 }
 
 // Função para verificar se um objeto é um PageObjectResponse
@@ -72,6 +72,18 @@ async function fetchAllBlocks(blockId: string): Promise<(BlockObjectResponse | P
   return allBlocks;
 }
 
+const publishedFilter = {
+  property: 'published',
+  checkbox: { equals: true },
+};
+
+function isPublishedPage(result: Parameters<typeof isPageObjectResponse>[0]): result is PageObjectResponse {
+  if (!isPageObjectResponse(result)) return false;
+
+  const status = result.properties.published;
+  return status?.type === 'checkbox' && status.checkbox;
+}
+
 // Função para buscar todos os posts do Notion
 export async function getPosts() {
   const databaseId = process.env.NOTION_DATABASE_ID;
@@ -81,12 +93,7 @@ export async function getPosts() {
 
   const response = await notion.databases.query({
     database_id: databaseId,
-    filter: {
-      property: 'published',
-      checkbox: {
-        equals: true,
-      },
-    },
+    filter: publishedFilter,
     sorts: [
       {
         property: 'date',
@@ -97,7 +104,7 @@ export async function getPosts() {
 
   // Filtramos apenas os objetos que são PageObjectResponse
   const posts = response.results
-    .filter(isPageObjectResponse)
+    .filter(isPublishedPage)
     .map((post) => {
       const properties = post.properties as unknown as NotionProperties;
       const mappedPost = {
@@ -113,36 +120,59 @@ export async function getPosts() {
   return posts;
 }
 
-// Função para buscar um post específico pelo slug
-export async function getPostBySlug(slug: string) {
+async function getPublishedPageBySlug(slug: string) {
   const databaseId = process.env.NOTION_DATABASE_ID;
   if (!databaseId) {
     throw new Error('NOTION_DATABASE_ID is not defined in the environment variables.');
   }
 
-  // Buscamos o post com o slug correspondente
   const response = await notion.databases.query({
     database_id: databaseId,
     filter: {
-      property: 'slug',
-      rich_text: {
-        equals: slug,
-      },
+      and: [
+        publishedFilter,
+        { property: 'slug', rich_text: { equals: slug } },
+      ],
     },
+    page_size: 2,
   });
 
-  // Filtramos apenas os objetos que são PageObjectResponse
-  const post = response.results.find(isPageObjectResponse);
-  if (!post) {
-    return null;
+  const matches = response.results.filter(isPublishedPage);
+  return matches.length === 1 && !response.has_more ? matches[0] : null;
+}
+
+export async function getPublishedPostImage(slug: string, blockId: string) {
+  const post = await getPublishedPageBySlug(slug);
+  if (!post) return null;
+
+  try {
+    const block = await notion.blocks.retrieve({ block_id: blockId });
+    if (
+      !('type' in block) ||
+      block.archived ||
+      block.parent.type !== 'page_id' ||
+      block.parent.page_id !== post.id ||
+      block.type !== 'image' ||
+      block.image.type !== 'file'
+    ) {
+      return null;
+    }
+
+    return block.image.file.url;
+  } catch (error) {
+    if ((error as { code?: string }).code === 'object_not_found') return null;
+    throw error;
   }
+}
 
-  // Buscamos todos os blocos filhos do post, lidando com paginação
+export async function getPostBySlug(slug: string) {
+  const post = await getPublishedPageBySlug(slug);
+  if (!post) return null;
+
   const blocks = await fetchAllBlocks(post.id);
-
   const properties = post.properties as unknown as NotionProperties;
 
-  const mappedPost = {
+  return {
     id: post.id,
     title: properties.title?.title?.[0]?.plain_text || '',
     slug: properties.slug?.rich_text?.[0]?.plain_text || '',
@@ -150,6 +180,4 @@ export async function getPostBySlug(slug: string) {
     tags: properties.tag?.multi_select?.map((tag) => tag.name) || [],
     blocks,
   };
-
-  return mappedPost;
 }

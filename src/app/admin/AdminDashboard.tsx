@@ -99,18 +99,19 @@ export default function AdminDashboard() {
   // filtro licenças
   const [filtroLic, setFiltroLic] = useState<"todas" | "ativas" | "expiradas" | "revogadas">("ativas");
 
-  async function carregarPedidos() {
-    setCarregando(true);
-    const res = await fetch("/api/admin/pedidos");
-    const data = await res.json();
-    setPedidos(data.pedidos || []);
-    setCarregando(false);
+  function carregarPedidos() {
+    return fetch("/api/admin/pedidos")
+      .then((res) => res.json())
+      .then((data) => {
+        setPedidos(data.pedidos || []);
+        setCarregando(false);
+      });
   }
 
-  async function carregarLicencas() {
-    const res = await fetch("/api/admin/licencas");
-    const data = await res.json();
-    setLicencas(data.licencas || []);
+  function carregarLicencas() {
+    return fetch("/api/admin/licencas")
+      .then((res) => res.json())
+      .then((data) => setLicencas(data.licencas || []));
   }
 
   useEffect(() => {
@@ -152,7 +153,11 @@ export default function AdminDashboard() {
 
     if (res.ok) {
       setAprovarState((s) => ({ ...s, [pedido.id]: "ok" }));
-      setTimeout(() => { carregarPedidos(); carregarLicencas(); }, 1000);
+      setTimeout(() => {
+        setCarregando(true);
+        carregarPedidos();
+        carregarLicencas();
+      }, 1000);
     } else {
       setAprovarState((s) => ({ ...s, [pedido.id]: "error" }));
     }
@@ -164,6 +169,7 @@ export default function AdminDashboard() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ pedido_id: pedido.id }),
     });
+    setCarregando(true);
     carregarPedidos();
   }
 

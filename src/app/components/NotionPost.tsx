@@ -1,15 +1,16 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus, coy } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { useTheme } from 'next-themes';
+import { useHydrated } from './useHydrated';
 
 // Definimos tipos compatíveis com os dados do Notion
 export interface RichText {
   plain_text: string;
-  href?: string;
+  href?: string | null;
   annotations: {
     bold: boolean;
     italic: boolean;
@@ -42,7 +43,7 @@ export interface Block {
     rich_text: RichText[];
   };
   image?: {
-    file?: { url: string };
+    hosted?: boolean;
     external?: { url: string };
     caption?: RichText[];
   };
@@ -59,11 +60,23 @@ export interface Block {
 
 interface NotionPostProps {
   blocks: Block[];
+  slug: string;
 }
 
-export default function NotionPost({ blocks }: NotionPostProps) {
+function httpsImageUrl(value?: string) {
+  if (!value) return undefined;
+
+  try {
+    const url = new URL(value);
+    if (url.protocol === 'https:' && !url.username && !url.password) return url.href;
+  } catch {
+    return undefined;
+  }
+}
+
+export default function NotionPost({ blocks, slug }: NotionPostProps) {
   const { theme, resolvedTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
+  const mounted = useHydrated();
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [imageStates, setImageStates] = useState<Record<string, { isLoading: boolean, hasError: boolean }>>({});
 
@@ -77,25 +90,6 @@ export default function NotionPost({ blocks }: NotionPostProps) {
       }
     }));
   };
-
-  // Adicione esta interface no seu arquivo de tipos
-interface ImageLoaderProps {
-  src: string;
-  width: number;
-  quality?: number;
-}
-
-  // Função loader com tipagem correta
-  const customLoader = ({ src, width, quality = 75 }: ImageLoaderProps): string => {
-    if (src.includes('amazonaws.com')) {
-      return `${src}?width=${width}&quality=${quality}`;
-    }
-    return `https://images.weserv.nl/?url=${encodeURIComponent(src)}&w=${width}&q=${quality}`;
-  };
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const copyToClipboard = (text: string, id: string) => {
     if (navigator.clipboard) {
@@ -235,67 +229,65 @@ interface ImageLoaderProps {
           </li>
         );
 
-        case "image":
-  const rawImageUrl = block.image?.file?.url || block.image?.external?.url;
-  if (!rawImageUrl) return <div key={id}>[Imagem nao encontrada]</div>;
+      case "image": {
+        const imageUrl = block.image?.hosted
+          ? `/api/proxy-image?${new URLSearchParams({ slug, block: id })}`
+          : httpsImageUrl(block.image?.external?.url);
+        if (!imageUrl) return <div key={id}>[Imagem não encontrada]</div>;
 
-  // Usa proxy para imagens do Notion S3 (que expiram)
-  const imageUrl = rawImageUrl.includes('amazonaws.com')
-    ? `/api/proxy-image?url=${encodeURIComponent(rawImageUrl)}`
-    : rawImageUrl;
+        const { isLoading = true, hasError = false } = imageStates[id] || {};
 
-  const { isLoading = true, hasError = false } = imageStates[id] || {};
+        return (
+          <div key={id} className="my-6 mx-auto max-w-full md:max-w-2xl">
+            <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
+              {isLoading && (
+                <div className="absolute inset-0 flex items-center justify-center bg-dark-800 rounded-lg">
+                  <div className="animate-pulse flex space-x-4">
+                    <div className="rounded-full bg-dark-600 h-12 w-12"></div>
+                  </div>
+                </div>
+              )}
 
-  return (
-    <div key={id} className="my-6 mx-auto max-w-full md:max-w-2xl">
-      <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
-        {isLoading && (
-          <div className="absolute inset-0 flex items-center justify-center bg-dark-800 rounded-lg">
-            <div className="animate-pulse flex space-x-4">
-              <div className="rounded-full bg-dark-600 h-12 w-12"></div>
+              {hasError && (
+                <div className="absolute inset-0 flex items-center justify-center bg-red-900/20 rounded-lg border border-red-800">
+                  <span className="text-red-300 text-sm">
+                    Falha ao carregar imagem
+                  </span>
+                </div>
+              )}
+
+              {!hasError && (
+                <Image
+                  src={imageUrl}
+                  alt={block.image?.caption?.[0]?.plain_text || "Imagem do Notion"}
+                  fill
+                  className={`object-contain rounded-lg ${isLoading ? 'opacity-0' : 'opacity-100 transition-opacity duration-300'}`}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 800px"
+                  onLoad={() => setImageState(id, { isLoading: false })}
+                  onError={() => setImageState(id, { isLoading: false, hasError: true })}
+                  priority={false}
+                  unoptimized
+                />
+              )}
             </div>
+
+            {block.image?.caption?.[0]?.plain_text && (
+              <p className={`text-center text-sm mt-2 ${hasError ? 'text-red-400' : 'text-text-muted'}`}>
+                {block.image.caption[0].plain_text}
+              </p>
+            )}
           </div>
-        )}
-
-        {hasError && (
-          <div className="absolute inset-0 flex items-center justify-center bg-red-900/20 rounded-lg border border-red-800">
-            <span className="text-red-300 text-sm">
-              Falha ao carregar imagem
-            </span>
-          </div>
-        )}
-
-        {!hasError && (
-          <Image
-            src={imageUrl}
-            alt={block.image?.caption?.[0]?.plain_text || "Imagem do Notion"}
-            fill
-            className={`object-contain rounded-lg ${isLoading ? 'opacity-0' : 'opacity-100 transition-opacity duration-300'}`}
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 800px"
-            onLoadingComplete={() => setImageState(id, { isLoading: false })}
-            onError={() => setImageState(id, { isLoading: false, hasError: true })}
-            priority={false}
-            unoptimized={!imageUrl.includes('cloudinary')}
-          />
-        )}
-      </div>
-
-      {block.image?.caption?.[0]?.plain_text && (
-        <p className={`text-center text-sm mt-2 ${hasError ? 'text-red-400' : 'text-text-muted'}`}>
-          {block.image.caption[0].plain_text}
-        </p>
-      )}
-    </div>
-  );
+        );
+      }
 
       case "embed":
-        const embedUrl = block.embed?.url;
+        const embedUrl = httpsImageUrl(block.embed?.url);
         if (embedUrl && /\.(png|jpg|jpeg|gif|webp)$/i.test(embedUrl)) {
-          const proxyUrl = `/api/proxy-image?url=${encodeURIComponent(embedUrl)}`;
           return (
             <Image
               key={id}
-              src={proxyUrl}
+              src={embedUrl}
+              unoptimized
               alt={block.embed?.caption?.[0]?.plain_text || "Imagem incorporada"}
               width={800}
               height={600}

@@ -133,8 +133,8 @@ export default function AptPage() {
             <p className="text-xs text-yellow-400 font-semibold mb-1">⚠️ Aviso do Windows ao instalar</p>
             <p className="text-xs text-text-muted">
               O Windows pode exibir um alerta do SmartScreen pois o ApT ainda não possui certificado digital de código.
-              Clique em <strong className="text-text-secondary">"Mais informações"</strong> e depois em{" "}
-              <strong className="text-text-secondary">"Executar assim mesmo"</strong> para prosseguir.
+              Clique em <strong className="text-text-secondary">&quot;Mais informações&quot;</strong> e depois em{" "}
+              <strong className="text-text-secondary">&quot;Executar assim mesmo&quot;</strong> para prosseguir.
               Isso é normal para softwares independentes.
             </p>
           </div>

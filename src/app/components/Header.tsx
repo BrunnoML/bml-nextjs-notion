@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
+import { useHydrated } from "./useHydrated";
 
 const navLinks = [
   { href: "/", label: "Inicio" },
@@ -13,15 +14,16 @@ const navLinks = [
 ];
 
 export default function Header() {
-  const [mounted, setMounted] = useState(false);
+  const mounted = useHydrated();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
+  const [previousPathname, setPreviousPathname] = useState(pathname);
 
-  useEffect(() => {
-    setMounted(true);
+  if (previousPathname !== pathname) {
+    setPreviousPathname(pathname);
     setMenuOpen(false);
-  }, [pathname]);
+  }
 
   useEffect(() => {
     const handleScroll = () => {

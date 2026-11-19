@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import type { RowDataPacket } from "mysql2";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { Resend } from "resend";
@@ -39,10 +40,15 @@ export async function POST(request: NextRequest) {
   }
 
   // Busca o pedido
-  const [rows] = await pool.execute(
+  const [rows] = await pool.execute<(RowDataPacket & {
+    nome: string;
+    email: string;
+    machine_id: string;
+    plano: string | null;
+  })[]>(
     `SELECT * FROM pedidos WHERE id = ? AND status = 'pendente'`,
     [pedido_id]
-  ) as any[];
+  );
 
   if (!rows.length) {
     return NextResponse.json({ error: "Pedido não encontrado ou já processado." }, { status: 404 });
