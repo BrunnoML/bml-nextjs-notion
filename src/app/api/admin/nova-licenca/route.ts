@@ -4,8 +4,6 @@ import { authOptions } from "@/lib/auth";
 import { Resend } from "resend";
 import pool from "@/lib/db";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export async function POST(request: NextRequest) {
   const session = await getServerSession(authOptions);
   if (!session) {
@@ -23,6 +21,11 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "machine_id inválido. Use o formato XXXX-XXXX-XXXX." }, { status: 400 });
   }
 
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    return NextResponse.json({ error: "Envio de e-mail indisponível." }, { status: 503 });
+  }
+  const resend = new Resend(apiKey);
   const featuresFinais = features?.length ? features : ["pdf_unlimited"];
 
   // Chama signing server

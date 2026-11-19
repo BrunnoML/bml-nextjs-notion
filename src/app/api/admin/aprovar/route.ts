@@ -5,8 +5,6 @@ import { authOptions } from "@/lib/auth";
 import { Resend } from "resend";
 import pool from "@/lib/db";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 const PLANO_DIAS: Record<string, number> = {
   mensal: 30,
   anual: 365,
@@ -38,6 +36,12 @@ export async function POST(request: NextRequest) {
   if (!pedido_id) {
     return NextResponse.json({ error: "pedido_id é obrigatório." }, { status: 400 });
   }
+
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    return NextResponse.json({ error: "Envio de e-mail indisponível." }, { status: 503 });
+  }
+  const resend = new Resend(apiKey);
 
   // Busca o pedido
   const [rows] = await pool.execute<(RowDataPacket & {

@@ -2,8 +2,6 @@ import { Resend } from "resend";
 import { NextRequest, NextResponse } from "next/server";
 import pool from "@/lib/db";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export async function POST(request: NextRequest) {
   try {
     const { nome, email, telefone, plano, profissao, machine_id, mensagem, pix_confirmado } = await request.json();
@@ -29,6 +27,12 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
+
+    const apiKey = process.env.RESEND_API_KEY;
+    if (!apiKey) {
+      return NextResponse.json({ error: "Envio de e-mail indisponível." }, { status: 503 });
+    }
+    const resend = new Resend(apiKey);
 
     // Salva pedido no banco
     await pool.execute(

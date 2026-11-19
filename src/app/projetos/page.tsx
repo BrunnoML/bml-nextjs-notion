@@ -24,7 +24,7 @@ const projects = [
       "Pipeline para classificar textos usando DistilBERT para gerar embeddings, seguido de um classificador supervisionado. Inclui interface gráfica com Gradio para importação, treinamento e inferência.",
     image: "/images/projeto2.jpg",
     tags: ["Python", "DistilBERT", "NLP", "Machine Learning"],
-    githubUrl: "https://github.com/BrunnoML/distilbert-classifier",
+    githubUrl: "https://github.com/BrunnoML/distilbert_classifier",
   },
 ];
 
